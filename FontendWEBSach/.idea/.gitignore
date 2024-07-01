@@ -1,5 +1,11 @@
-/node_modules
-/.angular
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
 # Created by https://www.toptal.com/developers/gitignore/api/intellij,visualstudiocode,visualstudio
 # Edit at https://www.toptal.com/developers/gitignore?templates=intellij,visualstudiocode,visualstudio
 
@@ -531,4 +537,3 @@ FodyWeavers.xsd
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij,visualstudiocode,visualstudio
-
