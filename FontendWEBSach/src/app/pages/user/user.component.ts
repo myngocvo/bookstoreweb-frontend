@@ -18,7 +18,6 @@ export class UserComponent {
   Dataupdatepassword: any = {};
   currentPage: string = 'hoSo';
   getCustomer: Customer | null = null;
-;
   idcustomer: string = '';
   gender: string = '';
   phone: string = '';

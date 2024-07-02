@@ -9,6 +9,16 @@ body {
   justify-content: center;
 }
 
+.paypal-button-container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  height: 100px; /* Adjust height as needed */
+}
+
+#paypal-button {
+  /* Add any additional styling for the PayPal button */
+}
 
 .highlighted-products-section {
   width: 100%;
@@ -18,7 +28,6 @@ body {
   margin: 0 40px 0 0px;
   padding-bottom: 30px;
   margin-bottom: 40px;
-  /* background-color: #97978D; */
 }
 
 .highlighted-title-card {
@@ -33,7 +42,6 @@ body {
   align-items: flex-start;
   gap: 10px;
 }
-
 
 .payment-img {
   margin-left: 20%;
@@ -77,4 +85,16 @@ body {
   background-color: #ffffff;
 }
 
+.payment-button-section {
+  display: flex;
+  justify-content: center; /* Center the buttons horizontally */
+  align-items: center; /* Center the buttons vertically */
+  height: 100px; /* Adjust height as needed */
+}
 
+.place-order-button {
+  display: flex;
+  justify-content: center; /* Center the button horizontally */
+  align-items: center; /* Center the button vertically */
+  height: 100px; /* Adjust height as needed */
+}
