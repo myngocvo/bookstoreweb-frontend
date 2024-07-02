@@ -4,5 +4,5 @@ export interface Supplier {
   email: string;
   description: string;
   phone: string;
-  books: any[]; 
+  books: any[];
 }

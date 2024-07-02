@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ModalAddStaffComponent } from './modal-add-staff.component';
+import {ModalAddStaffComponent} from './modal-add-staff.component';
 
 describe('ModalAddStaffComponent', () => {
   let component: ModalAddStaffComponent;

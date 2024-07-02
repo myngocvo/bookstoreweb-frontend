@@ -10,13 +10,13 @@ export interface BookDetailsViewModel {
   publishYear: number;
   available?: boolean;
   quantity?: number;
-  catergoryID:string;
+  catergoryID: string;
   categoryName: string;
   dimensions: string;
-  avage:number;
+  avage: number;
   pages?: number; // Using optional property
   description: string;
-  averageRating:number;
+  averageRating: number;
   image0: string;
   image1: string;
   image2: string;

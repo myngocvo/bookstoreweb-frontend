@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { User } from 'src/interfaces/User';
-import { UsersService } from 'src/services/Users/users.service';
+import {Component} from '@angular/core';
+import {User} from 'src/interfaces/User';
+import {UsersService} from 'src/services/Users/users.service';
 
 @Component({
   selector: 'app-staff-admin',
@@ -8,17 +8,19 @@ import { UsersService } from 'src/services/Users/users.service';
   styleUrls: ['./staff-admin.component.css']
 })
 export class StaffAdminComponent {
-  constructor(private users: UsersService) {}
-
-  Users: User[]=[];
-  filteredUsers: User[]=[];
+  Users: User[] = [];
+  filteredUsers: User[] = [];
   user: any = {};
-
   selectAllChecked = false; // Biến để theo dõi trạng thái chọn tất cả
   selectedStaff: any[] = []; // Mảng để lưu trữ trạng thái chọn của từng sách
+  assets: any;
+  isDeleteModalVisible = false;
+  isAddStaffModalVisible = false;
 
-  ngOnInit()
-  {
+  constructor(private users: UsersService) {
+  }
+
+  ngOnInit() {
     this.users.Users().subscribe({
       next: res => {
         this.Users = res;
@@ -30,11 +32,6 @@ export class StaffAdminComponent {
       }
     })
   }
-
-
-  assets: any;
-
-  isDeleteModalVisible = false;
 
   loadpro(searchTerm: string | null) {
     if (searchTerm && searchTerm.trim() !== '') {
@@ -69,10 +66,12 @@ export class StaffAdminComponent {
       }
     }
   }
+
   // Hàm xóa sách
   deleteStaff(cmt: any) {
-    console.log('Deleting staff:', );
+    console.log('Deleting staff:',);
   }
+
   // Hiển thị modal xác nhận xóa
   openDeleteModal() {
     this.isDeleteModalVisible = true;
@@ -82,8 +81,6 @@ export class StaffAdminComponent {
   closeDeleteModal() {
     this.isDeleteModalVisible = false;
   }
-
-  isAddStaffModalVisible = false;
 
   // Hiển thị modal add
   openAddStaffModal() {

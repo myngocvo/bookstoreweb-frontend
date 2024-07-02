@@ -1,5 +1,5 @@
-import { Component , Output, EventEmitter, Input} from '@angular/core';
-import { UsersService } from 'src/services/Users/users.service';
+import {Component, EventEmitter, Output} from '@angular/core';
+import {UsersService} from 'src/services/Users/users.service';
 
 @Component({
   selector: 'app-modal-add-staff',
@@ -7,12 +7,12 @@ import { UsersService } from 'src/services/Users/users.service';
   styleUrls: ['./modal-add-staff.component.css']
 })
 export class ModalAddStaffComponent {
-  constructor(private staffs: UsersService) {}
-
   DataStaff: any = {}
   @Output() closeModalEvent = new EventEmitter<void>();
-  
   isModalVisible = false;
+
+  constructor(private staffs: UsersService) {
+  }
 
   addStaff() {
     const dataStaff = {
@@ -35,8 +35,8 @@ export class ModalAddStaffComponent {
   }
 
   closeModal(): void {
-      this.closeModalEvent.emit();
+    this.closeModalEvent.emit();
   }
 
-  
+
 }

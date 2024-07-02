@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ModalAddVoucherComponent } from './modal-add-voucher.component';
+import {ModalAddVoucherComponent} from './modal-add-voucher.component';
 
 describe('ModalAddVoucherComponent', () => {
   let component: ModalAddVoucherComponent;

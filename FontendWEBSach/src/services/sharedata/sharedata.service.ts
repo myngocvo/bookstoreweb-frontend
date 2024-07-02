@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { Subject } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject, Subject} from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,6 +13,12 @@ export class SharedataService {
 
   private quantitySource = new BehaviorSubject<{ [key: string]: number }>({});
   quantity$ = this.quantitySource.asObservable();
+  private idCustomerSource = new BehaviorSubject<string>('');
+  idCustomer$ = this.idCustomerSource.asObservable();
+  private timeSource = new BehaviorSubject<string>('');
+  time$ = this.timeSource.asObservable();
+  private totalRevenueSource = new Subject<number>();
+  totalRevenue$ = this.totalRevenueSource.asObservable();
 
   setCheckedProductIds(checkedProductIds: string[]) {
     this.checkedProductIdsSource.next(checkedProductIds);
@@ -25,20 +31,11 @@ export class SharedataService {
   setQuantity(quantity: { [key: string]: number }) {
     this.quantitySource.next(quantity);
   }
-  private idCustomerSource = new BehaviorSubject<string>('');
-  idCustomer$ = this.idCustomerSource.asObservable();
 
-  private timeSource = new BehaviorSubject<string>('');
-  time$ = this.timeSource.asObservable();
-
-  setOrder(idCustomer:string,time:string)
-  {
+  setOrder(idCustomer: string, time: string) {
     this.idCustomerSource.next(idCustomer);
     this.timeSource.next(time);
   }
-
-  private totalRevenueSource = new Subject<number>();
-  totalRevenue$ = this.totalRevenueSource.asObservable();
 
   updateTotalRevenue(totalRevenue: number) {
     this.totalRevenueSource.next(totalRevenue);

@@ -1,17 +1,18 @@
-import { Component , Output, EventEmitter, Input} from '@angular/core';
-import { UsersService } from 'src/services/Users/users.service';
+import {Component, EventEmitter, Output} from '@angular/core';
+import {UsersService} from 'src/services/Users/users.service';
+
 @Component({
   selector: 'app-modal-add-stakholderbook',
   templateUrl: './modal-add-stakholderbook.component.html',
   styleUrls: ['./modal-add-stakholderbook.component.css']
 })
 export class ModalAddStakholderbookComponent {
-  constructor(private staffs: UsersService) {}
-
   DataStaff: any = {}
   @Output() closeModalEvent = new EventEmitter<void>();
-
   isModalVisible = false;
+
+  constructor(private staffs: UsersService) {
+  }
 
   addStaff() {
     const dataStaff = {
@@ -34,7 +35,7 @@ export class ModalAddStakholderbookComponent {
   }
 
   closeModal(): void {
-      this.closeModalEvent.emit();
+    this.closeModalEvent.emit();
   }
 
 

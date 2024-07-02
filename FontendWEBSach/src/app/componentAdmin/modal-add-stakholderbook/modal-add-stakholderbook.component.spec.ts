@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ModalAddStakholderbookComponent } from './modal-add-stakholderbook.component';
+import {ModalAddStakholderbookComponent} from './modal-add-stakholderbook.component';
 
 describe('ModalAddStakholderbookComponent', () => {
   let component: ModalAddStakholderbookComponent;

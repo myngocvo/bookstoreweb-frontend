@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Au } from './aut';
-import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Au} from './aut';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-author-card',
@@ -10,9 +9,10 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AuthorCardComponent implements OnInit {
 
-authors:Au[]= [];
+  authors: Au[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   ngOnInit() {
     this.http.get<Au[]>('https://localhost:7009/api/Authors').subscribe(

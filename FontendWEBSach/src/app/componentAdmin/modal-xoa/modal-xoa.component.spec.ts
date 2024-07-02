@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ModalXoaComponent } from './modal-xoa.component';
+import {ModalXoaComponent} from './modal-xoa.component';
 
 describe('ModalXoaComponent', () => {
   let component: ModalXoaComponent;

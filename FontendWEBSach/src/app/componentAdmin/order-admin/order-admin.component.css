@@ -131,7 +131,7 @@ mat-icon {
 }
 
 .info-table th input[type="checkbox"],
-.info-table td input[type="checkbox"]{
+.info-table td input[type="checkbox"] {
   width: 20px; /* Chiều rộng */
   height: 20px; /* Chiều cao */
   position: relative;

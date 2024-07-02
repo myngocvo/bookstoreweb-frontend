@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { Customer } from 'src/interfaces/Customer';
-import { CustomermainService } from 'src/services/customermain/customermain.service';
+import {Component} from '@angular/core';
+import {Customer} from 'src/interfaces/Customer';
+import {CustomermainService} from 'src/services/customermain/customermain.service';
 
 @Component({
   selector: 'app-user-admin',
@@ -8,15 +8,19 @@ import { CustomermainService } from 'src/services/customermain/customermain.serv
   styleUrls: ['./user-admin.component.css']
 })
 export class UserAdminComponent {
-  constructor(private customers: CustomermainService) {}
-  Customers: Customer[]=[]
-  filterdCustomers: Customer[]=[]
+  Customers: Customer[] = []
+  filterdCustomers: Customer[] = []
   customer: any = {}
   selectAllChecked = false; // Biến để theo dõi trạng thái chọn tất cả
   selectedCustomers: any[] = []; // Mảng để lưu trữ trạng thái chọn của từng sách
   idCustomerDelete: any;
-  ngOnInit()
-  {
+  assets: any;
+  isDeleteModalVisible = false;
+
+  constructor(private customers: CustomermainService) {
+  }
+
+  ngOnInit() {
     this.customers.Customers().subscribe({
       next: res => {
         this.Customers = res
@@ -40,10 +44,6 @@ export class UserAdminComponent {
     }
     console.log(this.filterdCustomers)
   }
-
-  assets: any;
-
-  isDeleteModalVisible = false;
 
   selectAll(event: any) {
     this.selectAllChecked = event.target.checked; // Cập nhật trạng thái chọn tất cả
@@ -75,6 +75,7 @@ export class UserAdminComponent {
     this.idCustomerDelete = id;
     this.isDeleteModalVisible = true;
   }
+
   // Đóng modal xác nhận xóa
   closeDeleteModal() {
     this.isDeleteModalVisible = false;

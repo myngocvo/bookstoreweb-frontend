@@ -33,10 +33,12 @@
   background-size: cover;
 
 }
-.modal-content img{
+
+.modal-content img {
   width: 20%;
 }
-.modal-content-text{
+
+.modal-content-text {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -44,14 +46,16 @@
   padding-top: 120%;
   padding-bottom: 10%;
 }
-.modal-content-text b{
+
+.modal-content-text b {
   border: 1px solid #97978D;
   background-color: aliceblue;
   padding: 2% 10%;
   border-radius: 5px;
 
 }
-.modal-content-text b:hover{
+
+.modal-content-text b:hover {
   letter-spacing: 2px;
 }
 

@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { Voucher } from 'src/interfaces/Voucher';
-import { VoucherService } from 'src/services/Voucher/voucher.service';
+import {Component} from '@angular/core';
+import {Voucher} from 'src/interfaces/Voucher';
+import {VoucherService} from 'src/services/Voucher/voucher.service';
 
 @Component({
   selector: 'app-voucher-admin',
@@ -8,14 +8,18 @@ import { VoucherService } from 'src/services/Voucher/voucher.service';
   styleUrls: ['./voucher-admin.component.css']
 })
 export class VoucherAdminComponent {
+  Vouchers: Voucher[] = [];
+  filteredVouchers: Voucher[] = [];
+  voucher: any = {}
+  isDeleteModalVisible = false;
+  isEditVoucherModalVisible = false;
+  isAddVoucherModalVisible = false;
+  idVoucherDelete: any;
+
   constructor(private vouchers: VoucherService) {
   }
-  Vouchers: Voucher[]=[];
-  filteredVouchers: Voucher[]=[];
-  voucher: any = {}
 
-  ngOnInit()
-  {
+  ngOnInit() {
     this.vouchers.Vouchers().subscribe({
       next: res => {
         console.log(res)
@@ -29,10 +33,6 @@ export class VoucherAdminComponent {
     });
   }
 
-  isDeleteModalVisible = false;
-  isEditVoucherModalVisible = false;
-  isAddVoucherModalVisible = false;
-  idVoucherDelete: any;
   loadpro(searchTerm: string | null) {
     if (searchTerm && searchTerm.trim() !== '') {
       // Filter the books based on the search term
@@ -68,7 +68,7 @@ export class VoucherAdminComponent {
 
   // Hiển thị modal xác nhận xóa
   openDeleteModal(id: any) {
-    this.idVoucherDelete= id;
+    this.idVoucherDelete = id;
     this.isDeleteModalVisible = true;
   }
 

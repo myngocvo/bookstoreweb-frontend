@@ -1,16 +1,19 @@
-import { Component , Output, EventEmitter, Input} from '@angular/core';
-import { VoucherService } from 'src/services/Voucher/voucher.service';
+import {Component, EventEmitter, Output} from '@angular/core';
+import {VoucherService} from 'src/services/Voucher/voucher.service';
+
 @Component({
   selector: 'app-modal-add-voucher',
   templateUrl: './modal-add-voucher.component.html',
   styleUrls: ['./modal-add-voucher.component.css']
 })
 export class ModalAddVoucherComponent {
-  constructor(private vouchers: VoucherService) {};
   @Output() closeModalEvent = new EventEmitter<void>();
   isModalVisible = false;
   DataVoucher: any = {};
-  
+
+  constructor(private vouchers: VoucherService) {
+  };
+
   addVoucher() {
     const dateBegin = new Date(); // Current date
     console.log(this.DataVoucher.PercentDiscount)
@@ -25,7 +28,7 @@ export class ModalAddVoucherComponent {
     this.vouchers.PostVoucher(dataVoucher).subscribe({
       next: res => {
         console.log(res);
-        this.DataVoucher={};
+        this.DataVoucher = {};
         alert("Thêm voucher thành công!");
         window.location.reload();
       },
@@ -34,10 +37,12 @@ export class ModalAddVoucherComponent {
       }
     })
   }
+
   convertToUppercase(value: string): string {
     return value.toUpperCase();
   }
+
   closeModal(): void {
-      this.closeModalEvent.emit();
+    this.closeModalEvent.emit();
   }
 }
