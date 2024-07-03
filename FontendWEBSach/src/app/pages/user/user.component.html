@@ -57,45 +57,45 @@
   <!-- user right -->
   <div *ngIf="getCustomer" class="right-user">
     <!-- Trang Ho So -->
-    <div class="right-user-1" *ngIf="currentPage === 'hoSo'">
+    <div *ngIf="currentPage === 'hoSo'" class="right-user-1">
       <mat-card class="highlighted-title-card">
         <mat-card-content style="font-size: 18px; color: #FFF;">HỒ SƠ CỦA TÔI</mat-card-content>
       </mat-card>
       <div class="content-profile">
         <p class="style-text-dn">Tên người dùng</p>
-        <mat-form-field class="full-width-input" appearance="fill">
-          <input matInput placeholder="Full name" [(ngModel)]="getCustomer.fullName ">
+        <mat-form-field appearance="fill" class="full-width-input">
+          <input [(ngModel)]="getCustomer.fullName " matInput placeholder="Full name">
         </mat-form-field>
 
         <p class="style-text">Số điện thoại</p>
-        <mat-form-field class="full-width-input" appearance="fill">
-          <input matInput placeholder="Số điện thoại" [(ngModel)]="getCustomer.phone">
+        <mat-form-field appearance="fill" class="full-width-input">
+          <input [(ngModel)]="getCustomer.phone" matInput placeholder="Số điện thoại">
         </mat-form-field>
 
         <p class="style-text">Email</p>
-        <mat-form-field class="full-width-input" appearance="fill">
-          <input matInput placeholder="Email" [(ngModel)]="getCustomer.email">
+        <mat-form-field appearance="fill" class="full-width-input">
+          <input [(ngModel)]="getCustomer.email" matInput placeholder="Email">
         </mat-form-field>
 
         <p class="style-text">Giới tính</p>
-        <mat-radio-group class="checkbox radio-spacing" [(ngModel)]="gender">
+        <mat-radio-group [(ngModel)]="gender" class="checkbox radio-spacing">
           <mat-radio-button value="nam">Nam</mat-radio-button>
           <mat-radio-button value="nữ">Nữ</mat-radio-button>
           <mat-radio-button value="khác">Khác</mat-radio-button>
         </mat-radio-group>
         <p class="style-text-nn">Ngày sinh</p>
         <mat-form-field class="full-width-input">
-          <input matInput placeholder="MM/DD/YYYY" [(ngModel)]="getCustomer.birthday" [matDatepicker]="datepicker">
-          <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+          <input [(ngModel)]="getCustomer.birthday" [matDatepicker]="datepicker" matInput placeholder="MM/DD/YYYY">
+          <mat-datepicker-toggle [for]="datepicker" matIconSuffix></mat-datepicker-toggle>
           <mat-datepicker #datepicker (dateChange)="onDateChange($event)">
             <mat-datepicker-actions>
               <button mat-button matDatepickerCancel>Cancel</button>
-              <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+              <button color="primary" mat-raised-button matDatepickerApply>Apply</button>
             </mat-datepicker-actions>
           </mat-datepicker>
         </mat-form-field>
         <!-- Nút Lưu -->
-        <button mat-raised-button class="save-button" (click)="updateprofile()">Lưu</button>
+        <button (click)="updateprofile()" class="save-button" mat-raised-button>Lưu</button>
       </div>
     </div>
 
@@ -103,32 +103,32 @@
     <div *ngIf="currentPage === 'diaChi'" class="right-user-1">
       <mat-card class="highlighted-title-card">
         <mat-card-content style="font-size: 18px; color: #FFF;">THÔNG TIN NHẬN HÀNG</mat-card-content>
-        <mat-card-content style="font-size: 18px; color: #FFF;">THÔNG TIN NHẬN HÀNG</mat-card-content>
       </mat-card>
       <div class="content-address">
         <p class="style-text-dn">Tỉnh/Thành phố</p>
-        <mat-form-field class="full-width-input" appearance="fill">
-          <input matInput placeholder="Nhập tỉnh/Thành phố" [(ngModel)]="blameaddress.t" (input)="updateAddress()">
+        <mat-form-field appearance="fill" class="full-width-input">
+          <input (input)="updateAddress()" [(ngModel)]="blameaddress.t" matInput placeholder="Nhập tỉnh/Thành phố">
         </mat-form-field>
 
         <p class="style-text">Quận/Huyện</p>
-        <mat-form-field class="full-width-input" appearance="fill">
-          <input matInput placeholder="Nhập tỉnh/Thành phố" [(ngModel)]="blameaddress.h" (input)="updateAddress()">
+        <mat-form-field appearance="fill" class="full-width-input">
+          <input (input)="updateAddress()" [(ngModel)]="blameaddress.h" matInput placeholder="Nhập tỉnh/Thành phố">
         </mat-form-field>
 
         <p class="style-text">Phường/Xã</p>
-        <mat-form-field class="full-width-input" appearance="fill">
-          <input matInput placeholder="Nhập tỉnh/Thành phố'" [(ngModel)]="blameaddress.x" (input)="updateAddress()">
+        <mat-form-field appearance="fill" class="full-width-input">
+          <input (input)="updateAddress()" [(ngModel)]="blameaddress.x" matInput placeholder="Nhập tỉnh/Thành phố'">
         </mat-form-field>
 
         <p class="style-text">Địa chỉ</p>
         <mat-form-field class="full-width-input">
-          <input type="text" matInput
-            placeholder="{{ detailedAddress ? 'Nhập chi tiết số nhà và đường':this.getCustomer.address }}"
-            [(ngModel)]="apt" (input)="updateAddress()">
+          <input (input)="updateAddress()" [(ngModel)]="apt"
+                 matInput
+                 placeholder="{{ detailedAddress ? 'Nhập chi tiết số nhà và đường':this.getCustomer.address }}"
+                 type="text">
           <span matSuffix style="width: 100px;">{{ detailedAddress }} &nbsp;</span>
         </mat-form-field>
-        <button mat-raised-button class="save-button" (click)="Address()">Lưu</button>
+        <button (click)="Address()" class="save-button" mat-raised-button>Lưu</button>
       </div>
     </div>
 
@@ -163,24 +163,22 @@
     <!-- Trang don hang -->
     <div *ngIf="currentPage === 'donHang'" class="right-user-2">
       <mat-card>
-        <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+        <ul #nav="ngbNav" [(activeId)]="active" class="nav-tabs" ngbNav>
           <li [ngbNavItem]="1">
-            <button ngbNavLink class="highlighted-title-order">CHỜ XÁC NHẬN</button>
+            <button class="highlighted-title-order" ngbNavLink>CHỜ XÁC NHẬN</button>
             <ng-template ngbNavContent style="background-color:#E9EAEE; ">
-              <div class="content-order" *ngFor="let item of getOrdersByStatus(0)">
+              <div *ngFor="let item of getOrdersByStatus(0)" class="content-order">
                 <mat-icon *ngIf="item.status==1">check_circle</mat-icon>
                 <mat-icon *ngIf="item.status==0">autorenew</mat-icon>
 
-                <div class="content-order-top" *ngFor="let img of item.image0;let i = index">
+                <div *ngFor="let img of item.image0;let i = index" class="content-order-top">
 
                   <div class="content-order-top-left">
                     <img alt="Product Image" src="{{ img }}">
                   </div>
 
-
                   <div class="content-order-top-right">
                     <div class="product-name">{{ item.title[i] }}</div>
-
 
                     <div class="product-details">
                       <p>Số lượng: <span>{{ item.quantity[i] }}</span></p>
@@ -194,40 +192,29 @@
                   <p>Ngày mua:
                     <span>{{ item.description | date: 'dd/MM/yyyy HH:mm:ss' }}</span>
                   </p>
-                </div>
-                <hr>
-                <div class="content-order-bottom">
-                  <p>Ngày mua:
-                    <span>{{ item.description | date: 'dd/MM/yyyy HH:mm:ss' }}</span>
-                  </p>
                   <p>Thành tiền:
-                    <span>{{(this.totalcart) |number:'1.0-0'}}<sup>đ</sup></span>
+                    <span>{{ (this.totalcart) |number:'1.0-0' }}<sup>đ</sup></span>
                   </p>
-                </div>
-              </div>
                 </div>
               </div>
             </ng-template>
-
 
           </li>
           <li [ngbNavItem]="2">
-            <button ngbNavLink class="highlighted-title-order">ĐANG VẬN CHUYỂN</button>
+            <button class="highlighted-title-order" ngbNavLink>ĐANG VẬN CHUYỂN</button>
             <ng-template ngbNavContent style="background-color:#E9EAEE; ">
-              <div class="content-order" *ngFor="let item of getOrdersByStatus(0)">
+              <div *ngFor="let item of getOrdersByStatus(0)" class="content-order">
                 <mat-icon *ngIf="item.status==1">check_circle</mat-icon>
                 <mat-icon *ngIf="item.status==0">autorenew</mat-icon>
 
-                <div class="content-order-top" *ngFor="let img of item.image0;let i = index">
+                <div *ngFor="let img of item.image0;let i = index" class="content-order-top">
 
                   <div class="content-order-top-left">
                     <img alt="Product Image" src="{{ img }}">
                   </div>
 
-
                   <div class="content-order-top-right">
                     <div class="product-name">{{ item.title[i] }}</div>
-
 
                     <div class="product-details">
                       <p>Số lượng: <span>{{ item.quantity[i] }}</span></p>
@@ -241,40 +228,29 @@
                   <p>Ngày mua:
                     <span>{{ item.description | date: 'dd/MM/yyyy HH:mm:ss' }}</span>
                   </p>
-                </div>
-                <hr>
-                <div class="content-order-bottom">
-                  <p>Ngày mua:
-                    <span>{{ item.description | date: 'dd/MM/yyyy HH:mm:ss' }}</span>
-                  </p>
                   <p>Thành tiền:
-                    <span>{{(this.totalcart) |number:'1.0-0'}}<sup>đ</sup></span>
+                    <span>{{ (this.totalcart) |number:'1.0-0' }}<sup>đ</sup></span>
                   </p>
-                </div>
-              </div>
                 </div>
               </div>
             </ng-template>
-
 
           </li>
           <li [ngbNavItem]="3">
-            <button ngbNavLink class="highlighted-title-order">ĐÃ HOÀN THÀNH</button>
+            <button class="highlighted-title-order" ngbNavLink>ĐÃ HOÀN THÀNH</button>
             <ng-template ngbNavContent>
-              <div class="content-order" *ngFor="let item of getOrdersByStatus(1)">
+              <div *ngFor="let item of getOrdersByStatus(1)" class="content-order">
                 <mat-icon *ngIf="item.status==1">check_circle</mat-icon>
                 <mat-icon *ngIf="item.status==0">autorenew</mat-icon>
 
-                <div class="content-order-top" *ngFor="let img of item.image0;let i = index">
+                <div *ngFor="let img of item.image0;let i = index" class="content-order-top">
 
                   <div class="content-order-top-left">
                     <img alt="Product Image" src="{{ img }}">
                   </div>
 
-
                   <div class="content-order-top-right">
                     <div class="product-name">{{ item.title[i] }}</div>
-
 
                     <div class="product-details">
                       <p>Số lượng: <span>{{ item.quantity[i] }}</span></p>
@@ -288,39 +264,28 @@
                   <p>Ngày mua:
                     <span>{{ item.description | date: 'dd/MM/yyyy HH:mm:ss' }}</span>
                   </p>
-                </div>
-                <hr>
-                <div class="content-order-bottom">
-                  <p>Ngày mua:
-                    <span>{{ item.description | date: 'dd/MM/yyyy HH:mm:ss' }}</span>
-                  </p>
                   <p>Thành tiền:
-                    <span>{{(this.totalcart) |number:'1.0-0'}}<sup>đ</sup></span>
+                    <span>{{ (this.totalcart) |number:'1.0-0' }}<sup>đ</sup></span>
                   </p>
-                </div>
-              </div>
-            </ng-template>
                 </div>
               </div>
             </ng-template>
           </li>
           <li [ngbNavItem]="4">
-            <button ngbNavLink class="highlighted-title-order">ĐƠN ĐÃ HỦY</button>
+            <button class="highlighted-title-order" ngbNavLink>ĐƠN ĐÃ HỦY</button>
             <ng-template ngbNavContent>
-              <div class="content-order" *ngFor="let item of shopingCart">
+              <div *ngFor="let item of shopingCart" class="content-order">
                 <mat-icon *ngIf="item.status==1">check_circle</mat-icon>
                 <mat-icon *ngIf="item.status==0">autorenew</mat-icon>
 
-                <div class="content-order-top" *ngFor="let img of item.image0;let i = index">
+                <div *ngFor="let img of item.image0;let i = index" class="content-order-top">
 
                   <div class="content-order-top-left">
                     <img alt="Product Image" src="{{ img }}">
                   </div>
 
-
                   <div class="content-order-top-right">
                     <div class="product-name">{{ item.title[i] }}</div>
-
 
                     <div class="product-details">
                       <p>Số lượng: <span>{{ item.quantity[i] }}</span></p>
@@ -334,25 +299,15 @@
                   <p>Ngày mua:
                     <span>{{ item.description | date: 'dd/MM/yyyy HH:mm:ss' }}</span>
                   </p>
-                </div>
-                <hr>
-                <div class="content-order-bottom">
-                  <p>Ngày mua:
-                    <span>{{ item.description | date: 'dd/MM/yyyy HH:mm:ss' }}</span>
-                  </p>
                   <p>Thành tiền:
-                    <span>{{(this.totalcart) |number:'1.0-0'}}<sup>đ</sup></span>
+                    <span>{{ (this.totalcart) |number:'1.0-0' }}<sup>đ</sup></span>
                   </p>
-                </div>
-              </div>
-            </ng-template>
                 </div>
               </div>
             </ng-template>
           </li>
         </ul>
 
-        <div [ngbNavOutlet]="nav" class="mt-2"></div>
         <div [ngbNavOutlet]="nav" class="mt-2"></div>
       </mat-card>
 

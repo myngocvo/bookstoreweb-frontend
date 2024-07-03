@@ -123,6 +123,7 @@ export class PaymentComponent implements OnInit {
     this.router.navigate(['user']);
   }
 
+// Paypal
   onPaymentMethodChange(event: any) {
     this.selectedPaymentMethod = event.value;
     this.showPaypalButton = this.selectedPaymentMethod === 'paypal';
@@ -149,13 +150,13 @@ export class PaymentComponent implements OnInit {
         },
         onApprove: (data: any, actions: any) => {
           return actions.order.capture().then((details: any) => {
-            console.log('Transaction completed by ' + details.payer.name.given_name);
+            // console.log('Transaction completed by ' + details.payer.name.given_name);
             alert('Giao dịch hoàn tất bởi ' + details.payer.name.given_name);
             this.processOrder();
           });
         },
         onError: (err: any) => {
-          console.error('PayPal transaction error:', err);
+          // console.error('PayPal transaction error:', err);
           alert('Đã xảy ra lỗi trong quá trình thanh toán bằng PayPal. Vui lòng thử lại sau.');
         }
       }).render('#paypal-button');

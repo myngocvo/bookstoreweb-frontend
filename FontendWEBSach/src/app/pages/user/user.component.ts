@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
-import { CustomerService } from 'src/services/customer/customer.service';
-import { CustomermainService } from 'src/services/customermain/customermain.service';
-import { Customer } from 'src/interfaces/Customer';
-import { Router } from '@angular/router';
-import { OrdersService } from 'src/services/Orders/orders.service';
-import { ShoppingCartItem } from 'src/interfaces/Orders';
-import { CloudConfig, Cloudinary, CloudinaryImage, URLConfig } from '@cloudinary/url-gen';
-import { fill } from '@cloudinary/url-gen/actions/resize';
-import { UploadService } from 'src/services/Users/upload.service';
+import {Component} from '@angular/core';
+import {CustomerService} from 'src/services/customer/customer.service';
+import {CustomermainService} from 'src/services/customermain/customermain.service';
+import {Customer} from 'src/interfaces/Customer';
+import {Router} from '@angular/router';
+import {OrdersService} from 'src/services/Orders/orders.service';
+import {ShoppingCartItem} from 'src/interfaces/Orders';
+import {CloudConfig, CloudinaryImage, URLConfig} from '@cloudinary/url-gen';
+import {fill} from '@cloudinary/url-gen/actions/resize';
+import {UploadService} from 'src/services/Users/upload.service';
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -16,13 +17,9 @@ import { UploadService } from 'src/services/Users/upload.service';
 export class UserComponent {
   Dataupdatepassword: any = {};
   currentPage: string = 'hoSo';
-  getCustomer: Customer | null = null;;
+  getCustomer: Customer | null = null;
   idcustomer: string = '';
   gender: string = '';
-  phone: string = '';
-  photo!: string;
-  address: string = '';
-  blameaddress: any = {};
   phone: string = '';
   photo!: string;
   address: string = '';
@@ -31,23 +28,8 @@ export class UserComponent {
   shopingCart: ShoppingCartItem[] = []
   totalcart: number = 0;
 
-  shopingCart: ShoppingCartItem[] = []
-  totalcart: number = 0;
-
   active = 1;
   selectedMenuItem: string = 'hoSo';
-  selectMenuItem(itemName: string) {
-    this.selectedMenuItem = itemName;
-  }
-  constructor(private customer: CustomerService, private customerMain: CustomermainService,
-    private router: Router, private ordersservice: OrdersService, private upload: UploadService) {
-    const savedImageSrc = localStorage.getItem('userImageSrc');
-    if (savedImageSrc) {
-      this.userImageSrc = savedImageSrc;
-    }
-    this.getCustomerID()
-    this.CartShoping()
-  }
   idUser!: string;
   img!: CloudinaryImage;
   publicIdPost!: string;
@@ -56,38 +38,71 @@ export class UserComponent {
   uploadPreset = "angular_app";
   userImageSrc!: string;
   file!: File | null;
+  //Địa chỉ
+  city: string = '';
+  district: string = '';
+  ward: string = '';
+  apt: string = '';
+  detailedAddress: string = '';
+  disableAddressFields: boolean = false;
+  fulladdress: string = '';
+
+  constructor(private customer: CustomerService, private customerMain: CustomermainService, private router: Router, private ordersservice: OrdersService, private upload: UploadService) {
+    const savedImageSrc = localStorage.getItem('userImageSrc');
+    if (savedImageSrc) {
+      this.userImageSrc = savedImageSrc;
+    }
+    this.getCustomerID()
+    this.CartShoping()
+  }
+
+  showPage(pageName: string) {
+    this.currentPage = pageName;
+  }
+
+  selectMenuItem(itemName: string) {
+    this.selectedMenuItem = itemName;
+  }
+
   getCustomerID() {
     this.idcustomer = this.customer.getClaimValue();
     this.customerMain.CustomersId(this.idcustomer).subscribe
-      ({
-        next: (res) => {
-          this.getCustomer = res
-          this.idUser = res.id
-          this.gender = res.gender;
-          this.phone = res.phone;
-          this.photo = res.photo;
-          console.log(this.photo)
-          if (res.address == null) {
-            this.blameaddress.t = null;
-            this.blameaddress.h = null;
-            this.blameaddress.x = null
-            this.blameaddress.ap = null;
-          } else {
-            this.blameaddress = extractAddressInfo(res.address)
-          }
-          const cloudConfig = new CloudConfig({ cloudName: 'dpk9xllkq' });
-          const urlConfig = new URLConfig({ secure: true });
-          console.log(this.photo)
-          this.img = new CloudinaryImage(this.photo, cloudConfig, urlConfig);
-          this.img.resize(fill().height(70).width(70))
-        },
-        error: (err) => {
-          console.error('Lỗi lấy dữ liệu ', err);
-        },
-      })
+    ({
+      next: (res) => {
+        this.getCustomer = res
+        this.idUser = res.id
+        this.gender = res.gender;
+        this.phone = res.phone;
+        this.photo = res.photo;
+        console.log(this.photo)
+        if (res.address == null) {
+          this.blameaddress.t = null;
+          this.blameaddress.h = null;
+          this.blameaddress.x = null
+          this.blameaddress.ap = null;
+        } else {
+          this.blameaddress = extractAddressInfo(res.address)
+        }
+        const cloudConfig = new CloudConfig({cloudName: 'dpk9xllkq'});
+        const urlConfig = new URLConfig({secure: true});
+        console.log(this.photo)
+        this.img = new CloudinaryImage(this.photo, cloudConfig, urlConfig);
+        this.img.resize(fill().height(70).width(70))
+      },
+      error: (err) => {
+        console.error('Lỗi lấy dữ liệu ', err);
+      },
+    })
   }
+
   ngOnInit() {
 
+  }
+
+// ------------------------------------------
+
+  getOrdersByStatus(status: number): ShoppingCartItem[] {
+    return this.shopingCart.filter(item => item.status === status);
   }
 
   Updatepass() {
@@ -105,28 +120,28 @@ export class UserComponent {
     const password = this.Dataupdatepassword.passwordODL;
     if (this.Dataupdatepassword.password == this.Dataupdatepassword.passwordconfirm) {
       this.customer.updatepass(this.phone, password).subscribe
-        ({
-          next: (res) => {
-            this.idcustomer = this.customer.getClaimValue();
-            console.log(dataupdate);
-            this.customer.update(this.idcustomer, dataupdate).subscribe({
-              next: (res) => {
-                alert("Thay đổi mật khẩu thành công")
-              },
-              error: (err) => {
-                console.error('Lỗi thay đổi dữ liệu ', err);
-              },
-            });
-          },
-          error: (err) => {
-            console.error('Mật khẩu không đúng ', err);
-          },
-        })
-    }
-    else {
+      ({
+        next: (res) => {
+          this.idcustomer = this.customer.getClaimValue();
+          console.log(dataupdate);
+          this.customer.update(this.idcustomer, dataupdate).subscribe({
+            next: (res) => {
+              alert("Thay đổi mật khẩu thành công")
+            },
+            error: (err) => {
+              console.error('Lỗi thay đổi dữ liệu ', err);
+            },
+          });
+        },
+        error: (err) => {
+          console.error('Mật khẩu không đúng ', err);
+        },
+      })
+    } else {
       alert('Không đúng')
     }
   }
+
   Address() {
     this.idcustomer = this.customer.getClaimValue();
     this.updateAddress()
@@ -154,7 +169,6 @@ export class UserComponent {
       }
     )
 
-  }
   }
 
   updateprofile() {
@@ -190,36 +204,24 @@ export class UserComponent {
     )
   }
 
-  // ĐƠn hàng
-
   CartShoping() {
     this.ordersservice.getHistoryOrders(this.idcustomer).subscribe(
       {
         next: (res) => {
           this.shopingCart = res;
-  
-          this.totalcart = 0;  
-  
+
           this.shopingCart.forEach(element => {
-            let orderTotal = 0;  
-            for (let i = 0; i < element.price.length; i++) {
-              orderTotal += element.price[i] * element.quantity[i];
+            for (let i = 0; i < element.image0.length; i++) {
+              this.totalcart += element.price[i] * element.quantity[i];
             }
-            this.totalcart += orderTotal; 
           });
-  
-          this.totalcart += 20000; 
         },
         error: (err) => {
           console.log(err);
         },
       }
     );
-  }
-  
-  
-  getOrdersByStatus(status: number): ShoppingCartItem[] {
-    return this.shopingCart.filter(item => item.status === status);
+    this.totalcart += 20000
   }
 
   onDateChange(event: any) {
@@ -227,13 +229,17 @@ export class UserComponent {
     console.log('Selected Date:', this.selectedDate);
   }
 
-  //----------------------------------------
-  logout() {
+//----------------------------------------
+logout() {
+  const confirmed = window.confirm('Bạn có chắc chắn muốn đăng xuất không?');
+
+  if (confirmed) {
     localStorage.removeItem('access_token');
-    alert('Đăng xuất thành công')
-    this.router.navigate(['home'])
+    alert('Đăng xuất thành công');
+    this.router.navigate(['home']);
   }
-  // ------------------------------------------
+}
+
 
   selectImage(): void {
 
@@ -276,7 +282,6 @@ export class UserComponent {
 
             this.customerMain.updateCustomer(this.idUser, customerUpdateData).subscribe({
               next: () => {
-              next: () => {
                 window.location.reload();
                 alert("Upload ảnh thành công!");
               },
@@ -293,26 +298,16 @@ export class UserComponent {
     }
   }
 
-
-  //Địa chỉ
-  city: string = '';
-  district: string = '';
-  ward: string = '';
-  apt: string = '';
-  detailedAddress: string = '';
-  disableAddressFields: boolean = false;
-  fulladdress: string = '';
-
   updateAddress() {
-    this.detailedAddress = `${', ' + '' + this.blameaddress.x ? this.blameaddress.x + ', ' : ''}${this.blameaddress.h ? this.blameaddress.h + ', ' : ''}${this.blameaddress.t}`;
     this.detailedAddress = `${', ' + '' + this.blameaddress.x ? this.blameaddress.x + ', ' : ''}${this.blameaddress.h ? this.blameaddress.h + ', ' : ''}${this.blameaddress.t}`;
     this.fulladdress = `${this.apt ? this.apt + ', ' : ''}${this.blameaddress.x ? this.blameaddress.x + ', ' : ''}${this.blameaddress.h ? this.blameaddress.h + ', ' : ''}${this.blameaddress.t || ''}`;
     this.disableAddressFields = this.detailedAddress.trim() !== ''; // Kiểm tra xem có địa chỉ chi tiết không để vô hiệu hóa trường
     console.log(this.fulladdress)
   }
+
+
 }
 
-function extractAddressInfo(fullAddress: string) {
 function extractAddressInfo(fullAddress: string) {
   const addressParts = fullAddress.split(',').map(part => part.trim());
   // Kiểm tra số lượng phần tử trong mảng để đảm bảo đủ thông tin
@@ -329,4 +324,3 @@ function extractAddressInfo(fullAddress: string) {
     t: t
   };
 }
-
