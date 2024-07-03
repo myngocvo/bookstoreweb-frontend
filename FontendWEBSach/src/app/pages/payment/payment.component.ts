@@ -50,10 +50,10 @@ export class PaymentComponent {
     });
     // console.log(this.quantity)
     // console.log(this.productsPrice)
+
     // tính tổng tiền của đơn hàng
     for (let i of this.checkedProductIds) {
       this.totalmoney += this.productsPrice[i] * this.quantity[i];
-
     }
     if (this.checkedProductIds.length != 0) {
       const payment = this.ele.nativeElement.querySelector('#ment');
@@ -67,7 +67,7 @@ export class PaymentComponent {
       this.ren.setStyle(payment, 'display', 'none');
     }
   }
-  
+
   // lấy địa chỉ cua  người dùng
   getCustomerID() {
     this.idcustomer = this.customer.getClaimValue();
@@ -107,7 +107,7 @@ export class PaymentComponent {
       if (Array.isArray(this.checkedProductIds) && this.checkedProductIds.length > 0) {
         let ordersProcessed = 0;
         const totalOrders = this.checkedProductIds.length;
-        
+
         for (let i of this.checkedProductIds) {
           const dataOrder = {
             id: `${i}${this.hours}:${this.minutes}:${this.seconds}`,
@@ -120,7 +120,7 @@ export class PaymentComponent {
             quantity: this.quantity[i],
             bookId: i,
           };
-  
+
           this.OrderService.postOrder(dataOrder).subscribe({
             next: (res) => {
               ordersProcessed++;
@@ -141,7 +141,4 @@ export class PaymentComponent {
       alert('Vui lòng chọn vào mục địa chỉ khác để điền thông tin địa chỉ giao hàng');
     }
   }
-  
-
-
 }

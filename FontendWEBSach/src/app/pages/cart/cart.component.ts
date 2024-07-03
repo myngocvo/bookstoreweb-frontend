@@ -24,13 +24,13 @@ export class CartComponent {
   productsPrice: { [id: string]: number} = {};
   checkedProductIds: string[] = [];
   totalProduct: number = 0;
-totalmoney: number = 0;
-constructor(private router: Router,private sharedata:SharedataService,private cdr: ChangeDetectorRef,private el: ElementRef,private cartService:CartsService,private customer: CustomerService,private bookservice:BooksService,
+  totalmoney: number = 0;
+  constructor(private router: Router,private sharedata:SharedataService,private cdr: ChangeDetectorRef,private el: ElementRef,private cartService:CartsService,private customer: CustomerService,private bookservice:BooksService,
   private renderer: Renderer2)
-{
-  this.idcustomer=this.customer.getClaimValue();
-  this.refreshCartData()
-}
+  {
+    this.idcustomer=this.customer.getClaimValue();
+    this.refreshCartData()
+  }
 checkCartdisplay(check: boolean, idBooks: string[]): void {
   if (check) {
     const bookObservables = idBooks.map(id => this.bookservice.getBookDetailsWithImagesid(id));
