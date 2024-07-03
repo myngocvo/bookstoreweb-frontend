@@ -8,5 +8,5 @@ export interface Customer {
   gender: string;
   address: string;
   birthday: Date | null;
-  phone:string;
+  phone: string;
 }

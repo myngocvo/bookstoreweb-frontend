@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import * as FileSaver from 'file-saver';
 
 @Injectable({
@@ -6,11 +6,12 @@ import * as FileSaver from 'file-saver';
 })
 export class WordService {
 
-  constructor() { }
+  constructor() {
+  }
 
   exportToWord(data: any, fileName: string): void {
     const template = this.generateTemplate(data);
-    const blob = new Blob(['\ufeff', template], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+    const blob = new Blob(['\ufeff', template], {type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
     FileSaver.saveAs(blob, fileName);
   }
 

@@ -1,21 +1,23 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
-import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import {Injectable} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {Router} from '@angular/router';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {JwtHelperService} from '@auth0/angular-jwt';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
-  private baseUrl: string = 'https://localhost:7009/api/Login/';
   userInfo = new BehaviorSubject(null);
   jwtHelper = new JwtHelperService();
+  private baseUrl: string = 'https://localhost:7009/api/Login/';
+
   constructor(private http: HttpClient, private router: Router,) {
-   }
-   forgerPass(phone: number, pass: string) {
+  }
+
+  forgerPass(phone: number, pass: string) {
     return this.http.put(`${this.baseUrl}updatePassword/${phone}/${pass}`, {});
   }
 
@@ -38,16 +40,19 @@ export class CustomerService {
       })
     );
   }
+
   update(id: string, data: any) {
     return this.http.put<any>(`${this.baseUrl}update/${id}`, data);
   }
+
   updatepass(phone: string, password: string): Observable<any> {
     const apiUrl = `${this.baseUrl}VerifyPassword/${phone}/${password}`;
     return this.http.get<any>(apiUrl);
   }
+
   getClaimValue(): string | '' {
     const token = localStorage.getItem('access_token');
-   const claimName = 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
+    const claimName = 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
     if (token) {
       try {
         // Giải mã token

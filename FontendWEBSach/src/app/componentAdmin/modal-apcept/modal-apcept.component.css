@@ -30,11 +30,11 @@
   width: 100px;
 }
 
-.modal-content mat-icon{
-margin-bottom: -5px;
+.modal-content mat-icon {
+  margin-bottom: -5px;
 }
 
-.modal-content p{
-text-align: center;
+.modal-content p {
+  text-align: center;
 }
 

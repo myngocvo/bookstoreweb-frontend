@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { bookhome } from 'src/interfaces/bookhome';
-import { bookimg } from 'src/interfaces/bookimg';
-import { Author } from 'src/interfaces/Author';
-import { Category } from 'src/interfaces/Category';
-import { Router } from '@angular/router';
+import {Component} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {bookhome} from 'src/interfaces/bookhome';
+import {bookimg} from 'src/interfaces/bookimg';
+import {Author} from 'src/interfaces/Author';
+import {Category} from 'src/interfaces/Category';
+import {Router} from '@angular/router';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -14,19 +15,21 @@ import { Router } from '@angular/router';
 export class AppComponent {
   product: any = {}
   title = 'WebQuanLyCuaHangSach';
-  constructor(private http: HttpClient, private router: Router) {}
   data: bookhome[] = [];
-  bookImage: bookimg[]=[];
-  author:Author |null=null;
+  bookImage: bookimg[] = [];
+  author: Author | null = null;
   filteredProducts: bookhome[] = [];
   categories: Category[] = [];
+
+  constructor(private http: HttpClient, private router: Router) {
+  }
 
   ngOnInit() {
     // Make a GET request to fetch book data
     this.http.get<bookhome[]>('https://localhost:7009/api/Books').subscribe({
       next: response => {
 
-          this.data = response;
+        this.data = response;
 
       },
       error: error => {
@@ -48,7 +51,7 @@ export class AppComponent {
     this.http.get<Category[]>(`https://localhost:7009/api/Categories?`).subscribe(
       {
         next: response => {
-          if(response) {
+          if (response) {
             this.categories = response;
           }
         },
@@ -57,8 +60,6 @@ export class AppComponent {
         }
       });
   }
-
- 
 
 
 }

@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ModalApceptComponent } from './modal-apcept.component';
+import {ModalApceptComponent} from './modal-apcept.component';
 
 describe('ModalApceptComponent', () => {
   let component: ModalApceptComponent;

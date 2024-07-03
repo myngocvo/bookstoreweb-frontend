@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { VoucherAdminComponent } from './voucher-admin.component';
+import {VoucherAdminComponent} from './voucher-admin.component';
 
 describe('VoucherAdminComponent', () => {
   let component: VoucherAdminComponent;

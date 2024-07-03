@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { SharedataService } from './sharedata.service';
+import {SharedataService} from './sharedata.service';
 
 describe('SharedataService', () => {
   let service: SharedataService;

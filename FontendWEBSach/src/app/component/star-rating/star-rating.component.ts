@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'app-star-rating',
@@ -12,15 +12,18 @@ export class StarRatingComponent {
   @Input() rating: number = 0;
 
   itemsToRepeat = new Array(5);
+
   ngOnInit() {
-        // Initialize the rating when the component is initialized
-         this.handleUpdateRating(this.rating);
-      }
+    // Initialize the rating when the component is initialized
+    this.handleUpdateRating(this.rating);
+  }
+
   handleUpdateRating(newRate: number) {
-      this.rating = newRate;
+    this.rating = newRate;
   }
 
 }
+
 // import { Component, Input } from '@angular/core';
 
 // @Component({

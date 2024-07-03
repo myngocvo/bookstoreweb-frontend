@@ -1,4 +1,4 @@
-import { Component , Output, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 
 @Component({
   selector: 'app-map',
@@ -8,7 +8,8 @@ import { Component , Output, EventEmitter} from '@angular/core';
 export class MapComponent {
   @Output() closeModalEvent = new EventEmitter<void>();
   isModalVisible = false;
+
   closeModal(): void {
-      this.closeModalEvent.emit();
+    this.closeModalEvent.emit();
   }
 }

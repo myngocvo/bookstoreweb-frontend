@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { OrderNotCompleteComponent } from './order-not-complete.component';
+import {OrderNotCompleteComponent} from './order-not-complete.component';
 
 describe('OrderNotCompleteComponent', () => {
   let component: OrderNotCompleteComponent;

@@ -1,12 +1,13 @@
 body {
   font-family: Arial, sans-serif;
 }
-.main-home{
+
+.main-home {
   margin-left: 4%;
   margin-right: 4%;
 }
 
-.btn-xt{
+.btn-xt {
   background-color: rgba(196, 209, 218, 1);
   display: block;
   margin-left: auto;
@@ -39,11 +40,11 @@ body {
   margin: 0;
   display: flex;
   justify-content: center;
-  gap: 10px;  /* Điều chỉnh khoảng cách giữa hai hình ảnh */
+  gap: 10px; /* Điều chỉnh khoảng cách giữa hai hình ảnh */
 }
 
 
-.sachhay{
+.sachhay {
   max-width: 44%; /* Giới hạn chiều rộng tối đa cho hình ảnh */
   width: 100%; /* Đảm bảo hình ảnh chiếm toàn bộ chiều rộng có thể của nó */
   height: auto; /* Đảm bảo chiều cao tự động điều chỉnh dựa trên chiều rộng */
@@ -88,7 +89,7 @@ body {
   width: 100%;
   border: 1px solid #E9EAEE;
   border-radius: 5px;
-  background-color:#E9EAEE;
+  background-color: #E9EAEE;
   margin: 0 40px 0 0px;
   padding-bottom: 30px;
   margin-bottom: 40px;
@@ -99,7 +100,7 @@ body {
   width: 100%;
   border: 1px solid #E9EAEE;
   border-radius: 5px;
-  background-color:#E9EAEE;
+  background-color: #E9EAEE;
   margin: 0 40px 0 0px;
   /* padding-bottom: 30px; */
   margin-bottom: 40px;
@@ -117,7 +118,7 @@ body {
   margin-left: 2%;
   margin-right: 2%;
   justify-content: space-between;
-background-color:#E9EAEE;
+  background-color: #E9EAEE;
 }
 
 .product-card {
@@ -153,12 +154,12 @@ background-color:#E9EAEE;
   display: flex;
   justify-content: center;
   margin-top: 20px;
-  background-color:#E9EAEE;
+  background-color: #E9EAEE;
 }
 
 .btn-xt {
   cursor: pointer;
-  background-color:#97978D;
+  background-color: #97978D;
   color: white;
   width: 150px;
   margin: auto;
@@ -197,8 +198,6 @@ background-color:#E9EAEE;
 }
 
 
-
-
 .Banner {
   width: 30%;
   display: flex;
@@ -208,23 +207,22 @@ background-color:#E9EAEE;
 }
 
 
-
 /* .Banner > div { */
-  /* flex: 1; Mỗi div chiếm một nửa chiều cao của .Banner */
-  /* display: flex; */
-  /* align-items: center; Căn giữa theo chiều dọc */
-  /* justify-content: center; Căn giữa theo chiều ngang */
+/* flex: 1; Mỗi div chiếm một nửa chiều cao của .Banner */
+/* display: flex; */
+/* align-items: center; Căn giữa theo chiều dọc */
+/* justify-content: center; Căn giữa theo chiều ngang */
 /* } */
 
 /* .Banner > div:first-child {
   margin-bottom: 15px;
 } */
-.banner-1{
+.banner-1 {
   height: 50%;
   margin-bottom: 12px;
 }
 
-.banner-2{
+.banner-2 {
   height: 50%;
   margin-top: 12px;
 }
@@ -236,11 +234,11 @@ background-color:#E9EAEE;
   display: block;
 }
 
-.banner-2 img{
+.banner-2 img {
   height: 100%;
 }
 
-.cartegory-right-bottom-item{
+.cartegory-right-bottom-item {
   position: relative;
   width: calc(24% - 20px);
   text-align: center;
@@ -250,19 +248,21 @@ background-color:#E9EAEE;
   border-radius: 5px;
 
 }
-.cartegory-right-bottom-item:hover{
+
+.cartegory-right-bottom-item:hover {
   transform: scale(1.03);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease;
 }
 
-.cartegory-right-bottom-item p{
+.cartegory-right-bottom-item p {
   font-size: 15px;
-  padding: 0px 12px ;
+  padding: 0px 12px;
   font-weight: 500;
   text-align: left;
 }
-.cartegory-right-bottom-item h1{
+
+.cartegory-right-bottom-item h1 {
   font-size: 15px;
   color: #777;
   padding: 5px 12px;
@@ -283,7 +283,7 @@ background-color:#E9EAEE;
   transition: all 0.5s ease-in-out;
 }
 
-.productIMG{
+.productIMG {
   height: 60%;
   width: 100%;
   display: flex;
@@ -299,28 +299,30 @@ background-color:#E9EAEE;
   transition: all 0.5s ease-in-out;
 }
 
-.product-right-price p{
+.product-right-price p {
   font-size: 15px;
   font-weight: 500;
   color: #C92127;
 }
 
-.gg{
+.gg {
   display: flex;
   font-size: 15px;
 
 }
-.gg p:nth-child(1){
+
+.gg p:nth-child(1) {
   text-decoration: line-through;
   padding-right: 10px;
 }
-.gg p:nth-child(2){
-  color:#fff;
+
+.gg p:nth-child(2) {
+  color: #fff;
   border-radius: 5px;
-  background-color:   #C92127;
+  background-color: #C92127;
   padding: 0px 5px;
 }
 
-.product-rating{
+.product-rating {
   margin-top: -5px;
 }

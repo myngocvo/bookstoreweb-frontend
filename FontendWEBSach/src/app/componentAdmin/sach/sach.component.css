@@ -122,16 +122,18 @@ mat-raised-button {
 mat-icon {
   margin-right: 5px;
 }
-.bookimage{
+
+.bookimage {
   max-width: 100px;
   max-height: 100px;
   object-fit: cover;
 }
-.see-more-container{
-display: flex;
-width: 100%;
-justify-content: center;
-align-items: center;
-margin: 20px;
-z-index: 0;
+
+.see-more-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+  z-index: 0;
 }

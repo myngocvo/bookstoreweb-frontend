@@ -1,6 +1,5 @@
-import { Component, Renderer2, ElementRef } from '@angular/core';
-import { ProductReviewDTO } from 'src/interfaces/ProductView';
-import { ProductViewService } from 'src/services/ProductView/product-view.service';
+import {Component, ElementRef, Renderer2} from '@angular/core';
+import {ProductViewService} from 'src/services/ProductView/product-view.service';
 
 @Component({
   selector: 'app-comment',
@@ -8,24 +7,24 @@ import { ProductViewService } from 'src/services/ProductView/product-view.servic
   styleUrls: ['./comment.component.css']
 })
 export class CommentComponent {
-  page=1
-  sizepage=5
+  page = 1
+  sizepage = 5
   View: any = {}
+  datacommentfull: any[] = [];
+  datacomment: any[] = [];
+  loadpageReviewCount: number = 0;
+  assets: any;
+  isDeleteModalVisible = false;
+  searchResults: any[] = [];
+
   constructor(private el: ElementRef,
-    private renderer: Renderer2,private Comment:ProductViewService)
-  {
+              private renderer: Renderer2, private Comment: ProductViewService) {
     this.LoadComment(1)
     this.LoadCommentful()
   }
-  datacommentfull:any[] = [];
-  datacomment:any[] = [];
-  loadpageReviewCount:number=0;
 
-  assets: any;
-
-  isDeleteModalVisible = false;
-  LoadComment( page:number) {
-    this.Comment. getProductReviews(page, this.sizepage).subscribe({
+  LoadComment(page: number) {
+    this.Comment.getProductReviews(page, this.sizepage).subscribe({
       next: (res: any) => {
         this.loadpageReviewCount = res.totalCount
         this.datacomment = res.data;
@@ -36,18 +35,19 @@ export class CommentComponent {
       },
     });
   }
+
   LoadCommentful() {
     this.Comment.getAllProductReviews().subscribe({
       next: (res: any) => {
-        this. datacommentfull = res.data;
-        console.log( res);
+        this.datacommentfull = res.data;
+        console.log(res);
       },
       error: (err) => {
         // Handle error
       },
     });
   }
-  searchResults: any[] = [];
+
   loadpro(title: string) {
     this.LoadCommentful()
     const search = this.el.nativeElement.querySelector('#searchview');
@@ -67,10 +67,12 @@ export class CommentComponent {
       View.title.toLowerCase().includes(searchTerm)
     );
   }
+
   onPageChange(newPage: number): void {
     this.page = newPage;
     this.LoadComment(this.page)
   }
+
   // selectAll(event: any) {
   //   this.datacomment.forEach(cmt => cmt.selected = event.target.checked);
   // }
@@ -83,7 +85,7 @@ export class CommentComponent {
   // Đóng modal xác nhận xóa
   closeDeleteModal() {
     this.isDeleteModalVisible = false;
-      this.LoadComment(this.page);
+    this.LoadComment(this.page);
 
   }
 }

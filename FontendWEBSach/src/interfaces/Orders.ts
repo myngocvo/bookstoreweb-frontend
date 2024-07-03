@@ -12,8 +12,9 @@ export interface Order {
   customer: null; // You might want to create a Customer interface
   bills: []; // You might want to create a Bill interface
 }
+
 export interface ShoppingCartItem {
-  status:number,
+  status: number,
   description: string;
   image0: string[];
   title: string[];
@@ -21,17 +22,17 @@ export interface ShoppingCartItem {
   quantity: number[];
   bookIds: string[];
 }
-export interface OrderWithDetails
-{
-    id : string;
-    phone:string;
-    customerId:string;
-    customerName : string;
-    orderDate :Date;
-    status:number;
-    address :string
-    description :string;
-    unitPrice:number;
-    quantity:number;
-    bookName :string
+
+export interface OrderWithDetails {
+  id: string;
+  phone: string;
+  customerId: string;
+  customerName: string;
+  orderDate: Date;
+  status: number;
+  address: string
+  description: string;
+  unitPrice: number;
+  quantity: number;
+  bookName: string
 }

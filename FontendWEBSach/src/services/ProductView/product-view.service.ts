@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import {ProductView} from 'src/interfaces/ProductView';
-import {ProductReviewBookid} from 'src/interfaces/ProductView';
-import { Observable } from 'rxjs';
-import {ProductReviewDTO} from 'src/interfaces/ProductView';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {ProductReviewBookid, ProductReviewDTO, ProductView} from 'src/interfaces/ProductView';
+import {Observable} from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,17 +10,20 @@ export class ProductViewService {
 
   private apiUrl = 'https://localhost:7009/api/ProductReviews';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
 
-  getProductReviews(page:number|null,pageSize:number|null): Observable<ProductReviewDTO[]> {
+  getProductReviews(page: number | null, pageSize: number | null): Observable<ProductReviewDTO[]> {
     const url = `${this.apiUrl}?page=${page}&pageSize=${pageSize}`
     return this.http.get<ProductReviewDTO[]>(url);
   }
+
   getAllProductReviews(): Observable<ProductReviewDTO[]> {
     const url = `${this.apiUrl}`
     return this.http.get<ProductReviewDTO[]>(url);
   }
+
   getProductReviewByBookId(id: string): Observable<ProductReviewBookid[]> {
     const url = `${this.apiUrl}/books/${id}`;
     return this.http.get<ProductReviewBookid[]>(url);
@@ -46,6 +48,7 @@ export class ProductViewService {
     const url = `${this.apiUrl}/${id}`;
     return this.http.put<ProductView>(url, productReview);
   }
+
   // DELETE a product review by ID
   deleteProductReview(id: string): Observable<void> {
     const url = `${this.apiUrl}/${id}`;

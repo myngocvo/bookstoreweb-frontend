@@ -1,60 +1,63 @@
-
-  <div class="header"  [ngClass]="{'header-no-zindex': isModalVisible}">
-    <!-- Top Section -->
-    <div class="header-top">
-        <!-- Logo -->
-        <div class="logo-container">
-            <img src="assets/logo.png" alt="Logo" class="logo" routerLink="">
-        </div>
-
-        <!-- Search Bar -->
-        <div class="search-container">
-          <input type="text" [(ngModel)]="product.name" name="name"placeholder="Tìm kiếm..." class="search-input" (input)="loadpro(product.name)">
-          <button class="search-btn">
-              <mat-icon class="search-icon" >search</mat-icon>
-          </button>
-          <div class="dropdown" id="dropdown">
-              <div class="cartegory-right-bottom-item" *ngFor="let product of filteredProducts" (click)="navigateToProduct(product.id)">
-                  <div class="productIMG" >
-                    <img [src]="getBookImage(product.id)">
-                  </div>
-                  <span class=" btn-outline-secondary" placement="bottom" ngbTooltip={{product.title}}>{{ product.title }}</span>
-                </div>
-          </div>
-      </div>
-
-        <!-- matBadge="15" matBadgeColor="warn" -->
-        <!-- Action Buttons -->
-        <div class="actions-container">
-            <button class="action-item">
-                <mat-icon>notifications</mat-icon>
-                <span>Thông báo</span>
-            </button>
-            <button class="action-item" (click)="Cart()">
-                <mat-icon>shopping_cart</mat-icon>
-                <span>Giỏ Hàng</span>
-            </button>
-            <!-- routerLink="/user" -->
-            <button class="action-item" (click)="statusLogin()">
-                <mat-icon>account_circle</mat-icon>
-                <span>Tài Khoản</span>
-            </button>
-            <app-modal *ngIf="isModalVisible" (closeModalEvent)="isModalVisible = false"></app-modal>
-
-        </div>
+<div [ngClass]="{'header-no-zindex': isModalVisible}" class="header">
+  <!-- Top Section -->
+  <div class="header-top">
+    <!-- Logo -->
+    <div class="logo-container">
+      <img alt="Logo" class="logo" routerLink="" src="assets/logo.png">
     </div>
 
-    <!-- Navigation Bar -->
-    <nav class="nav-bar">
-      <button class="nav-item" routerLink="">TRANG CHỦ</button>
+    <!-- Search Bar -->
+    <div class="search-container">
+      <input (input)="loadpro(product.name)" [(ngModel)]="product.name" class="search-input" name="name"
+             placeholder="Tìm kiếm..."
+             type="text">
+      <button class="search-btn">
+        <mat-icon class="search-icon">search</mat-icon>
+      </button>
+      <div class="dropdown" id="dropdown">
+        <div (click)="navigateToProduct(product.id)" *ngFor="let product of filteredProducts"
+             class="cartegory-right-bottom-item">
+          <div class="productIMG">
+            <img [src]="getBookImage(product.id)">
+          </div>
+          <span class=" btn-outline-secondary" ngbTooltip={{product.title}}
+                placement="bottom">{{ product.title }}</span>
+        </div>
+      </div>
+    </div>
 
-      <button class="nav-item" mat-button [matMenuTriggerFor]="theloai">THỂ LOẠI</button>
-      <mat-menu #theloai="matMenu" yPosition="above">
-          <button mat-menu-item *ngFor="let category of categories" (click)="navigateToCategory(category.id)">
-              {{category.name}}
-          </button>
-      </mat-menu>
-      <button class="nav-item" mat-button (click)="openMapModal()">CỬA HÀNG</button>
-      <app-map *ngIf="isMapModalVisible" (closeModalEvent)="isMapModalVisible = false"></app-map>
-      <button class="nav-item" routerLink="">THÔNG TIN</button>
+    <!-- matBadge="15" matBadgeColor="warn" -->
+    <!-- Action Buttons -->
+    <div class="actions-container">
+      <button class="action-item">
+        <mat-icon>notifications</mat-icon>
+        <span>Thông báo</span>
+      </button>
+      <button (click)="Cart()" class="action-item">
+        <mat-icon>shopping_cart</mat-icon>
+        <span>Giỏ Hàng</span>
+      </button>
+      <!-- routerLink="/user" -->
+      <button (click)="statusLogin()" class="action-item">
+        <mat-icon>account_circle</mat-icon>
+        <span>Tài Khoản</span>
+      </button>
+      <app-modal (closeModalEvent)="isModalVisible = false" *ngIf="isModalVisible"></app-modal>
+
+    </div>
+  </div>
+
+  <!-- Navigation Bar -->
+  <nav class="nav-bar">
+    <button class="nav-item" routerLink="">TRANG CHỦ</button>
+
+    <button [matMenuTriggerFor]="theloai" class="nav-item" mat-button>THỂ LOẠI</button>
+    <mat-menu #theloai="matMenu" yPosition="above">
+      <button (click)="navigateToCategory(category.id)" *ngFor="let category of categories" mat-menu-item>
+        {{ category.name }}
+      </button>
+    </mat-menu>
+    <button (click)="openMapModal()" class="nav-item" mat-button>CỬA HÀNG</button>
+    <app-map (closeModalEvent)="isMapModalVisible = false" *ngIf="isMapModalVisible"></app-map>
+    <button class="nav-item" routerLink="">THÔNG TIN</button>
   </nav>

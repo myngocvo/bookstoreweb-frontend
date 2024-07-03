@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
-import { OrderWithDetails } from 'src/interfaces/Orders';
-import { OrdersService } from 'src/services/Orders/orders.service';
-import { SharedataService } from 'src/services/sharedata/sharedata.service';
-import { Router } from '@angular/router';
+import {Component} from '@angular/core';
+import {OrderWithDetails} from 'src/interfaces/Orders';
+import {OrdersService} from 'src/services/Orders/orders.service';
+import {SharedataService} from 'src/services/sharedata/sharedata.service';
+import {Router} from '@angular/router';
 import * as XLSX from 'xlsx';
+
 @Component({
   selector: 'app-revenue-admin',
   templateUrl: './revenue-admin.component.html',
@@ -11,24 +12,25 @@ import * as XLSX from 'xlsx';
 })
 export class RevenueAdminComponent {
   totalRevenue: number = 0;
-  orderData:OrderWithDetails[]=[];
-  Doanhthu:number=0;
-  quantity:number=0;
-  totalproduct:number=0;
-  constructor(private router:Router,private sharedata:SharedataService,private Order:OrdersService)
-  {
-   this.Order.getOrders(1).subscribe({
-     next: res => {
-       this.orderData=res
-       this.calculateTotalRevenue()
-       this. calculateTotal()
-     },
-     error: err => {
-       console.log("Lỗi lấy dữ liệu: ", err)
-     }
-   });
-  }
+  orderData: OrderWithDetails[] = [];
+  Doanhthu: number = 0;
+  quantity: number = 0;
+  totalproduct: number = 0;
   productDetails: ProductDetail[] = [];
+
+  constructor(private router: Router, private sharedata: SharedataService, private Order: OrdersService) {
+    this.Order.getOrders(1).subscribe({
+      next: res => {
+        this.orderData = res
+        this.calculateTotalRevenue()
+        this.calculateTotal()
+      },
+      error: err => {
+        console.log("Lỗi lấy dữ liệu: ", err)
+      }
+    });
+  }
+
   calculateTotal() {
     let uniqueProducts = new Set<string>();
 
@@ -61,6 +63,7 @@ export class RevenueAdminComponent {
       }
     });
   }
+
   exportToExcel(): void {
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(document.getElementById('table'));
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
@@ -69,6 +72,7 @@ export class RevenueAdminComponent {
     // Save the workbook
     XLSX.writeFile(wb, 'ThongKeSachDaBan.xlsx');
   }
+
   calculateTotalRevenue() {
     let totalRevenue = 0;
     let totalQuantity = 0;
@@ -79,13 +83,14 @@ export class RevenueAdminComponent {
       totalQuantity += order.quantity;
       uniqueProducts.add(order.bookName);
     });
-    this.Doanhthu=totalRevenue
-    this.quantity=totalQuantity
+    this.Doanhthu = totalRevenue
+    this.quantity = totalQuantity
     // this.sharedata.updateTotalRevenue(this.Doanhthu);
     this.totalproduct = uniqueProducts.size;
   }
 
 }
+
 interface ProductDetail {
   name: string;
   unitPrice: number;

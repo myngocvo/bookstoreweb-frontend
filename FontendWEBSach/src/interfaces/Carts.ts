@@ -2,6 +2,6 @@ export interface Cart {
   id: string;
   bookId: string;
   customerId: string;
-  book:null;
+  book: null;
   customer: null;
 }

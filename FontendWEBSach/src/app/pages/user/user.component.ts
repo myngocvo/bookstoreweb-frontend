@@ -23,14 +23,18 @@ export class UserComponent {
   photo!: string;
   address: string = '';
   blameaddress: any = {};
+  phone: string = '';
+  photo!: string;
+  address: string = '';
+  blameaddress: any = {};
   selectedDate: Date = new Date();
   shopingCart: ShoppingCartItem[] = []
   totalcart: number = 0;
 
+  shopingCart: ShoppingCartItem[] = []
+  totalcart: number = 0;
+
   active = 1;
-  showPage(pageName: string) {
-    this.currentPage = pageName;
-  }
   selectedMenuItem: string = 'hoSo';
   selectMenuItem(itemName: string) {
     this.selectedMenuItem = itemName;
@@ -151,6 +155,7 @@ export class UserComponent {
     )
 
   }
+  }
 
   updateprofile() {
     //công thêm 1 ngày
@@ -238,7 +243,6 @@ export class UserComponent {
     }
   }
 
-
   async onSelect(event: any): Promise<void> {
     const inputFile = event.target as HTMLInputElement;
     if (inputFile && inputFile.files && inputFile.files.length > 0) {
@@ -272,6 +276,7 @@ export class UserComponent {
 
             this.customerMain.updateCustomer(this.idUser, customerUpdateData).subscribe({
               next: () => {
+              next: () => {
                 window.location.reload();
                 alert("Upload ảnh thành công!");
               },
@@ -300,12 +305,14 @@ export class UserComponent {
 
   updateAddress() {
     this.detailedAddress = `${', ' + '' + this.blameaddress.x ? this.blameaddress.x + ', ' : ''}${this.blameaddress.h ? this.blameaddress.h + ', ' : ''}${this.blameaddress.t}`;
+    this.detailedAddress = `${', ' + '' + this.blameaddress.x ? this.blameaddress.x + ', ' : ''}${this.blameaddress.h ? this.blameaddress.h + ', ' : ''}${this.blameaddress.t}`;
     this.fulladdress = `${this.apt ? this.apt + ', ' : ''}${this.blameaddress.x ? this.blameaddress.x + ', ' : ''}${this.blameaddress.h ? this.blameaddress.h + ', ' : ''}${this.blameaddress.t || ''}`;
     this.disableAddressFields = this.detailedAddress.trim() !== ''; // Kiểm tra xem có địa chỉ chi tiết không để vô hiệu hóa trường
     console.log(this.fulladdress)
   }
 }
 
+function extractAddressInfo(fullAddress: string) {
 function extractAddressInfo(fullAddress: string) {
   const addressParts = fullAddress.split(',').map(part => part.trim());
   // Kiểm tra số lượng phần tử trong mảng để đảm bảo đủ thông tin

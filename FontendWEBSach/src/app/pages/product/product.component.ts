@@ -27,15 +27,22 @@ import { SharedataService } from 'src/services/sharedata/sharedata.service';
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css'],
   providers: [NgbModalConfig, NgbModal, NgbRatingConfig, NgbTypeaheadModule, FormsModule, JsonPipe, NgbRatingModule]
+  providers: [NgbModalConfig, NgbModal, NgbRatingConfig, NgbTypeaheadModule, FormsModule, JsonPipe, NgbRatingModule]
 })
 export class ProductComponent implements OnInit {
+  pageSize = 10;
   pageSize = 10;
   page = 1;
   // model:any
   product: | null = null;
   productful: BookDetailsViewModel | null = null;
+  product: | null = null;
+  productful: BookDetailsViewModel | null = null;
   productSameCategoryID: any[] = [];
   imgID: bookimg | null = null;
+  author: Author[] = [];
+  Category: Category[] = [];
+  Suplier: Supplier[] = [];
   author: Author[] = [];
   Category: Category[] = [];
   Suplier: Supplier[] = [];
@@ -45,14 +52,25 @@ export class ProductComponent implements OnInit {
   addproductID: string = ''
   idcustomer: string = '';
   idCategory: string = '';
+  imgbook: bookimg[] = []
+  selectedImage: string = '' // Variable to store the selected image
+  addproductID: string = ''
+  idcustomer: string = '';
+  idCategory: string = '';
   loadedBooksCount: number = 0;
+  bookdetail: BookDetail[] = [];
+  productViewinterface: ProductReviewBookid[] = [];
   bookdetail: BookDetail[] = [];
   productViewinterface: ProductReviewBookid[] = [];
   ratingStatistical: any[] = [];
   averageRating: number = 0;
   averageRating1: number = 0;
   totalVotes: number = 0;
+  averageRating: number = 0;
+  averageRating1: number = 0;
+  totalVotes: number = 0;
   commemtrating: { rating?: number, comment?: string } = {};
+  quantity: { [key: string]: number } = {};
   quantity: { [key: string]: number } = {};
   checkedProductIds: string[] = [];
   productsPrice: { [id: string]: number } = {};
@@ -61,7 +79,11 @@ export class ProductComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router, private books: BooksService,
     private cartsService: CartsService,
+    private cartsService: CartsService,
     private customer: CustomerService,
+    private bookdetailService: BookDetailsService,
+    private productView: ProductViewService,
+    private sharedata: SharedataService,
     private bookdetailService: BookDetailsService,
     private productView: ProductViewService,
     private sharedata: SharedataService,
@@ -92,7 +114,9 @@ export class ProductComponent implements OnInit {
   changeImage(imageUrl: string): void {
     this.selectedImage = imageUrl;
   }
+
   ngOnInit(): void {
+    const productId = this.route.snapshot.paramMap.get('id') || '';
     const productId = this.route.snapshot.paramMap.get('id') || '';
     this.getProductReviewaAverag(productId)
     this.getRatingStatistical()
@@ -102,6 +126,21 @@ export class ProductComponent implements OnInit {
     const productId = this.route.snapshot.paramMap.get('id') || '';
     this.addproductID = productId;
     if (productId) {
+      this.books.getBookDetailsWithImagesid(productId).subscribe({
+        next: (res) => {
+          console.log('API Response:', res);
+          this.productful = res;
+          this.idCategory = res.catergoryID;
+          this.productsPrice[res.bookId] = (1 - res.pricePercent) * res.unitPrice;
+          this.checkedProductIds.push(res.bookId);
+          this.quantityfirst = res.quantity ?? 0
+          this.sameCategory(1);
+          this.getProductView();
+        },
+        error: (err) => {
+          console.error('lỗi', err);
+        }
+      })
       this.books.getBookDetailsWithImagesid(productId).subscribe({
         next: (res) => {
           console.log('API Response:', res);
@@ -145,7 +184,27 @@ export class ProductComponent implements OnInit {
             const observables = this.productSameCategoryID.map((book) =>
               this.getAvergaProductRating(book.bookId)
             );
+            // Create an array of observables for each product
+            const observables = this.productSameCategoryID.map((book) =>
+              this.getAvergaProductRating(book.bookId)
+            );
 
+            // Use forkJoin to combine observables into a single observable
+            forkJoin(observables).subscribe((ratings) => {
+              // Assign each rating to its corresponding book
+              ratings.forEach((rating, index) => {
+                this.productSameCategoryID[index].averageRating1 = rating !== null ? rating : 0;
+              });
+            });
+          } else {
+            console.error('Invalid response format:', response);
+          }
+        },
+        error: (error: any) => {
+          console.error('Error loading books by category:', error);
+        }
+      });
+  }
             // Use forkJoin to combine observables into a single observable
             forkJoin(observables).subscribe((ratings) => {
               // Assign each rating to its corresponding book
@@ -173,7 +232,25 @@ export class ProductComponent implements OnInit {
         })
       );
   }
+  getAvergaProductRating(productId: string): Observable<number | null> {
+    return this.productView.getProductReviewaAveragBookId(productId)
+      .pipe(
+        catchError((error: any) => {
+          console.error(`${productId}:`, error);
+          // Set a default value of null when there's an error or the rating is not found
+          return of(null);
+        })
+      );
+  }
 
+  addCart() {
+    this.idcustomer = this.customer.getClaimValue();
+    console.log(this.addproductID + this.idcustomer)
+    const dataCart = {
+      id: this.addproductID + this.idcustomer,
+      bookId: this.addproductID,
+      customerId: this.idcustomer,
+    }
   addCart() {
     this.idcustomer = this.customer.getClaimValue();
     console.log(this.addproductID + this.idcustomer)
@@ -184,6 +261,7 @@ export class ProductComponent implements OnInit {
     }
     this.cartsService.addCarts(dataCart).subscribe({
       next: (res: any[]) => {
+        alert('Thêm vào giỏ hàng thành công')
         alert('Thêm vào giỏ hàng thành công')
       },
       error: (err) => {
@@ -255,6 +333,7 @@ export class ProductComponent implements OnInit {
   percent2(per: number) {
     return '-' + per * 100 + '%';
   }
+
   navigateToProduct(productId: string) {
     // Loại bỏ dấu cách và khoảng trắng khỏi productId
     const sanitizedProductId = productId.replace(/\s+/g, ''); // Loại bỏ dấu cách và khoảng trắng
@@ -269,10 +348,13 @@ export class ProductComponent implements OnInit {
     console.log(this.quantity[bookId]);
 
   }
+
   calculateTotalVotesRatingAcount(ratingStatistical: any[]): number {
     return ratingStatistical.reduce((total, item) => total + item.count, 0);
   }
+
   onRatingChange(selectedRating: number) {
+    this.commemtrating.rating = selectedRating
     this.commemtrating.rating = selectedRating
   }
   payment() {
@@ -287,7 +369,9 @@ export class ProductComponent implements OnInit {
     this.sharedata.setProductsPrice(this.productsPrice);
     this.sharedata.setQuantity(this.quantity);
     if (this.quantity[productId] != 0) {
+    if (this.quantity[productId] != 0) {
       this.router.navigate(['payment']);
+    } else {
     } else {
       alert('Vui lòng chọn số lượng')
     }
