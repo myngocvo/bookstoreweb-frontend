@@ -13,13 +13,13 @@ body {
 .main-payment {
   display: flex;
   flex-direction: column;
-} 
+}
 
 .paypal-button-container {
   display: flex;
-  justify-content: center; 
+  justify-content: center;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
   align-items: center;
 }
 
@@ -45,6 +45,7 @@ body {
   align-items: flex-start;
   gap: 10px;
 }
+
 /* voucher */
 
 .check-voucher {
@@ -101,7 +102,7 @@ body {
   text-align: center;
 }
 
-.check-order th tr td{
+.check-order th tr td {
   text-align: center;
 }
 
@@ -209,7 +210,7 @@ body {
 .place-order-button {
   display: flex;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
 }

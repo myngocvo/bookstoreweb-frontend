@@ -1,14 +1,14 @@
-import { Component, ElementRef, NgZone, OnInit, Renderer2 } from '@angular/core';
-import { forkJoin } from 'rxjs';
-import { Router } from '@angular/router';
+import {Component, ElementRef, NgZone, OnInit, Renderer2} from '@angular/core';
+import {forkJoin} from 'rxjs';
+import {Router} from '@angular/router';
 
-import { SharedataService } from 'src/services/sharedata/sharedata.service';
-import { BooksService } from 'src/services/Books/books.service';
-import { BookDetailsViewModel } from 'src/interfaces/fullbook';
-import { CustomermainService } from 'src/services/customermain/customermain.service';
-import { CustomerService } from 'src/services/customer/customer.service';
-import { OrdersService } from 'src/services/Orders/orders.service';
-import { Order } from 'src/interfaces/Orders';
+import {SharedataService} from 'src/services/sharedata/sharedata.service';
+import {BooksService} from 'src/services/Books/books.service';
+import {BookDetailsViewModel} from 'src/interfaces/fullbook';
+import {CustomermainService} from 'src/services/customermain/customermain.service';
+import {CustomerService} from 'src/services/customer/customer.service';
+import {OrdersService} from 'src/services/Orders/orders.service';
+import {Order} from 'src/interfaces/Orders';
 
 declare var paypal: any;
 
@@ -39,6 +39,13 @@ export class PaymentComponent implements OnInit {
 
   // Exchange rate (example rate)
   exchangeRate: number = 23000; // VND to USD
+  selectedCoupon: string = '';
+  discountAmount: number = 0;
+  coupons = [
+    {code: 'COUPON1', description: 'Mã giảm giá 10%'},
+    {code: 'COUPON2', description: 'Mã giảm giá 20%'},
+    {code: 'COUPON3', description: 'Mã giảm giá 30%'},
+  ];
 
   constructor(
     private ren: Renderer2,
@@ -148,7 +155,7 @@ export class PaymentComponent implements OnInit {
     if (document.getElementById('paypal-button')) {
       paypal.Buttons({
         createOrder: (data: any, actions: any) => {
-          const amountInUSD = (this.totalmoney + 20000) / this.exchangeRate;
+          const amountInUSD = ((this.totalmoney + 20000) - this.discountAmount) / this.exchangeRate;
           return actions.order.create({
             purchase_units: [{
               amount: {
@@ -232,34 +239,23 @@ export class PaymentComponent implements OnInit {
     this.displayPaymentSection(false);
   }
 
-  Order() {
-    this.processOrder();
-  }
-
-  selectedCoupon: string ='';
-  discountAmount: number = 0;
-  coupons = [
-    { code: 'COUPON1', description: 'Mã giảm giá 10%' },
-    { code: 'COUPON2', description: 'Mã giảm giá 20%' },
-    { code: 'COUPON3', description: 'Mã giảm giá 30%' },
-  ];
-
   applyCoupon() {
     switch (this.selectedCoupon) {
       case 'COUPON1':
-        this.updateDiscount(0.1); 
+        this.updateDiscount(0.1);
         break;
       case 'COUPON2':
-        this.updateDiscount(0.2); 
+        this.updateDiscount(0.2);
         break;
       case 'COUPON3':
-        this.updateDiscount(0.3); 
+        this.updateDiscount(0.3);
         break;
       default:
-        this.updateDiscount(0);  
+        this.updateDiscount(0);
         break;
     }
   }
+
   updateDiscount(percent: number) {
     this.discountAmount = this.totalmoney * percent;
   }
