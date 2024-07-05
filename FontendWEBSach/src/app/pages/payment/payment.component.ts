@@ -1,14 +1,14 @@
-import {Component, ElementRef, OnInit, Renderer2} from '@angular/core';
-import {forkJoin} from 'rxjs';
-import {Router} from '@angular/router';
+import { Component, ElementRef, NgZone, OnInit, Renderer2 } from '@angular/core';
+import { forkJoin } from 'rxjs';
+import { Router } from '@angular/router';
 
-import {SharedataService} from 'src/services/sharedata/sharedata.service';
-import {BooksService} from 'src/services/Books/books.service';
-import {BookDetailsViewModel} from 'src/interfaces/fullbook';
-import {CustomermainService} from 'src/services/customermain/customermain.service';
-import {CustomerService} from 'src/services/customer/customer.service';
-import {OrdersService} from 'src/services/Orders/orders.service';
-import {Order} from 'src/interfaces/Orders';
+import { SharedataService } from 'src/services/sharedata/sharedata.service';
+import { BooksService } from 'src/services/Books/books.service';
+import { BookDetailsViewModel } from 'src/interfaces/fullbook';
+import { CustomermainService } from 'src/services/customermain/customermain.service';
+import { CustomerService } from 'src/services/customer/customer.service';
+import { OrdersService } from 'src/services/Orders/orders.service';
+import { Order } from 'src/interfaces/Orders';
 
 declare var paypal: any;
 
@@ -48,7 +48,8 @@ export class PaymentComponent implements OnInit {
     private customerMain: CustomermainService,
     private router: Router,
     private sharedata: SharedataService,
-    private bookfull: BooksService
+    private bookfull: BooksService,
+    private ngZone: NgZone // Inject NgZone
   ) {
     this.sharedata.checkedProductIds$.subscribe((value) => {
       this.checkedProductIds = value;
@@ -94,8 +95,11 @@ export class PaymentComponent implements OnInit {
     this.idcustomer = this.customer.getClaimValue();
     this.customerMain.CustomersId(this.idcustomer).subscribe({
       next: (res) => {
-        this.address = res.address;
-        console.log(this.address);
+        // Use NgZone.run to ensure this code runs inside Angular's zone
+        this.ngZone.run(() => {
+          this.address = res.address;
+          console.log(this.address);
+        });
       },
       error: (err) => {
         console.error('Lỗi khi lấy thông tin khách hàng', err);
@@ -107,7 +111,10 @@ export class PaymentComponent implements OnInit {
     const bookObservables = this.checkedProductIds.map(id => this.bookfull.getBookDetailsWithImagesid(id));
     forkJoin(bookObservables).subscribe({
       next: (results) => {
-        this.books = results;
+        // Use NgZone.run to ensure this code runs inside Angular's zone
+        this.ngZone.run(() => {
+          this.books = results;
+        });
       },
       error: (err) => {
         console.log('Lỗi khi lấy thông tin sách', err);
@@ -120,10 +127,13 @@ export class PaymentComponent implements OnInit {
   }
 
   stranUser() {
-    this.router.navigate(['user']);
+    // Use NgZone.run to ensure this code runs inside Angular's zone
+    this.ngZone.run(() => {
+      this.router.navigate(['user']);
+    });
   }
 
-// Paypal
+  // Paypal
   onPaymentMethodChange(event: any) {
     this.selectedPaymentMethod = event.value;
     this.showPaypalButton = this.selectedPaymentMethod === 'paypal';
@@ -148,21 +158,24 @@ export class PaymentComponent implements OnInit {
             }]
           });
         },
-        onApprove: (data: any, actions: any) => {
-          return actions.order.capture().then((details: any) => {
-            // console.log('Transaction completed by ' + details.payer.name.given_name);
-            alert('Giao dịch hoàn tất bởi ' + details.payer.name.given_name);
+        onApprove: async (data: any, actions: any) => {
+          const orderID = data.orderID;
+          try {
+            const details = await actions.order.capture();
+            console.log('Payment successful:', details);
+            alert("Giao dịch thành công")
             this.processOrder();
-          });
+          } catch (err) {
+            console.error('Error during capture:', err);
+            alert('Đã xảy ra lỗi trong quá trình xử lý thanh toán. Vui lòng thử lại sau.');
+          }
         },
         onError: (err: any) => {
-          // console.error('PayPal transaction error:', err);
           alert('Đã xảy ra lỗi trong quá trình thanh toán bằng PayPal. Vui lòng thử lại sau.');
         }
       }).render('#paypal-button');
     }
   }
-
 
   processOrder() {
     if (this.address) {
@@ -188,8 +201,11 @@ export class PaymentComponent implements OnInit {
               ordersProcessed++;
               if (ordersProcessed === totalOrders) {
                 alert('Vui lòng chờ xác nhận đơn hàng từ shop');
-                this.resetState();
-                this.router.navigate(['user']);
+                // Navigate inside NgZone.run to ensure it runs inside Angular's zone
+                this.ngZone.run(() => {
+                  this.resetState();
+                  this.router.navigate(['user']);
+                });
               }
             },
             error: (err) => {
