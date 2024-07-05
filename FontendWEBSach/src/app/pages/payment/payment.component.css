@@ -3,22 +3,23 @@ body {
 }
 
 .container {
-  max-width: 1300px;
+  max-width: 1500px;
   margin: auto;
   display: flex;
   justify-content: center;
 }
 
+.main-payment {
+  display: flex;
+  flex-direction: column;
+} 
+
 .paypal-button-container {
   display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  height: 100px; /* Adjust height as needed */
+  justify-content: center; 
+  align-items: center;
 }
 
-#paypal-button {
-  /* Add any additional styling for the PayPal button */
-}
 
 .highlighted-products-section {
   width: 100%;
@@ -42,59 +43,126 @@ body {
   align-items: flex-start;
   gap: 10px;
 }
+/* voucher */
 
-.payment-img {
-  margin-left: 20%;
-  width: 80px;
-  height: auto;
+.check-voucher {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
 }
 
-.credit-card-logos {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.coupon-section {
+  background-color: #f8f8f8;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 10px;
 }
 
-.check-order tbody, th, td, tr {
-  width: 20%;
+.coupon-section select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.apply-coupon-button {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.apply-coupon-button:hover {
+  background-color: #218838;
+}
+
+/*  */
+.check-order {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.check-order table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.check-order th, .check-order td {
+  /* border: 1px solid #ddd; */
+  padding: 10px;
   text-align: center;
-  padding: 10px 0;
+}
+
+.check-order th tr td{
+  text-align: center;
 }
 
 .check-order td img {
-  width: 40%;
-}
-
-.main-payment {
-  display: flex;
-  justify-content: right;
-  flex-direction: column;
-}
-
-.btn-order {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 10px;
-}
-
-.check-order tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
+  max-width: 100px;
+  height: auto;
+  display: block;
+  margin: auto;
 }
 
 .check-order tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.check-order tbody tr:nth-child(even) {
   background-color: #ffffff;
 }
 
+.total {
+  width: 100%;
+}
+
+.total tr {
+  border-bottom: 1px solid #ddd;
+}
+
+.total td {
+  padding: 15px;
+  font-size: 1.1em;
+}
+
+.total td[colspan="4"] {
+  text-align: right;
+  font-weight: bold;
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+.total td:last-child {
+  text-align: right;
+  font-weight: bold;
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+
+.bold-large {
+  font-weight: bold;
+  font-size: 1.3em;
+  background-color: #e2e2e2;
+  color: #000;
+}
+
+
 .payment-button-section {
   display: flex;
-  justify-content: center; /* Center the buttons horizontally */
-  align-items: center; /* Center the buttons vertically */
-  height: 100px; /* Adjust height as needed */
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 .place-order-button {
   display: flex;
-  justify-content: center; /* Center the button horizontally */
-  align-items: center; /* Center the button vertically */
-  height: 100px; /* Adjust height as needed */
+  justify-content: center;
+  align-items: center; 
 }
