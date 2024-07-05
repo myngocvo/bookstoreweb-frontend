@@ -4,6 +4,7 @@ body {
 
 .container {
   max-width: 1500px;
+  max-width: 1500px;
   margin: auto;
   display: flex;
   justify-content: center;
@@ -13,9 +14,17 @@ body {
   display: flex;
   flex-direction: column;
 } 
+}
+
+.main-payment {
+  display: flex;
+  flex-direction: column;
+} 
 
 .paypal-button-container {
   display: flex;
+  justify-content: center; 
+  align-items: center;
   justify-content: center; 
   align-items: center;
 }
@@ -108,8 +117,14 @@ body {
   height: auto;
   display: block;
   margin: auto;
+  max-width: 100px;
+  height: auto;
+  display: block;
+  margin: auto;
 }
 
+.check-order tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
 .check-order tbody tr:nth-child(odd) {
   background-color: #f9f9f9;
 }
@@ -154,8 +169,47 @@ body {
 }
 
 
+.total {
+  width: 100%;
+}
+
+.total tr {
+  border-bottom: 1px solid #ddd;
+}
+
+.total td {
+  padding: 15px;
+  font-size: 1.1em;
+}
+
+.total td[colspan="4"] {
+  text-align: right;
+  font-weight: bold;
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+.total td:last-child {
+  text-align: right;
+  font-weight: bold;
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+
+.bold-large {
+  font-weight: bold;
+  font-size: 1.3em;
+  background-color: #e2e2e2;
+  color: #000;
+}
+
+
 .payment-button-section {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
@@ -163,6 +217,8 @@ body {
 
 .place-order-button {
   display: flex;
+  justify-content: center;
+  align-items: center; 
   justify-content: center;
   align-items: center; 
 }
