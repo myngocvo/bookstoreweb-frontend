@@ -14,12 +14,6 @@ body {
   display: flex;
   flex-direction: column;
 } 
-}
-
-.main-payment {
-  display: flex;
-  flex-direction: column;
-} 
 
 .paypal-button-container {
   display: flex;
@@ -28,7 +22,6 @@ body {
   justify-content: center; 
   align-items: center;
 }
-
 
 .highlighted-products-section {
   width: 100%;
@@ -123,8 +116,6 @@ body {
   margin: auto;
 }
 
-.check-order tbody tr:nth-child(odd) {
-  background-color: #f9f9f9;
 .check-order tbody tr:nth-child(odd) {
   background-color: #f9f9f9;
 }
