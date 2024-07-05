@@ -1,27 +1,26 @@
 <div id="ment">
   <app-header></app-header>
-  <div class="container">
-    <div class="main-payment">
-      <!-- Chọn phương thức giao -->
-      <div class="highlighted-products-section">
-        <mat-card class="highlighted-title-card">
-          <mat-card-content style="font-size: 18px; color: #FFF; font-weight: bold;">ĐỊA CHỈ GIAO HÀNG
-          </mat-card-content>
-        </mat-card>
-        <mat-radio-group class="address-options">
-          <mat-radio-button [checked]="true" [value]="address">{{ address }}</mat-radio-button>
-          <mat-radio-button (click)="stranUser()">Cập nhật lại địa chỉ</mat-radio-button>
-        </mat-radio-group>
-      </div>
+  <div class="container main-payment">
+    <!-- Chọn phương thức giao -->
+    <div class="highlighted-products-section">
+      <mat-card class="highlighted-title-card">
+        <mat-card-content style="font-size: 18px; color: #FFF; font-weight: bold;">ĐỊA CHỈ GIAO HÀNG
+        </mat-card-content>
+      </mat-card>
+      <mat-radio-group class="address-options">
+        <mat-radio-button [checked]="true" [value]="address">{{ address }}</mat-radio-button>
+        <mat-radio-button (click)="stranUser()">Cập nhật lại địa chỉ</mat-radio-button>
+      </mat-radio-group>
+    </div>
 
-      <!-- Kiểm tra đơn hàng -->
-      <div class="highlighted-products-section">
-        <mat-card class="highlighted-title-card">
-          <mat-card-content style="font-size: 18px; color: #FFF; font-weight: bold;">ĐƠN HÀNG</mat-card-content>
-        </mat-card>
-        <div class="check-order">
-          <table>
-            <thead>
+    <!-- Kiểm tra đơn hàng -->
+    <div class="highlighted-products-section">
+      <mat-card class="highlighted-title-card">
+        <mat-card-content style="font-size: 18px; color: #FFF; font-weight: bold;">ĐƠN HÀNG</mat-card-content>
+      </mat-card>
+      <div class="check-order">
+        <table>
+          <thead>
             <tr>
               <th></th>
               <th>Tên sản phẩm</th>
@@ -29,51 +28,61 @@
               <th>Số lượng</th>
               <th>Thành tiền</th>
             </tr>
-            </thead>
-            <tbody>
+          </thead>
+          <tbody>
             <tr *ngFor="let i of books">
               <td><img [src]="i.image0" alt=""></td>
               <td>{{ i.title }}</td>
               <td>{{ (percent1(i.unitPrice, i.pricePercent)) | number:'1.0-0' }}<sup>đ</sup></td>
               <td>{{ quantity[i.bookId] }}</td>
-              <td>{{ ((quantity[i.bookId] != null ? quantity[i.bookId] : 1) * percent1(i.unitPrice, i.pricePercent)) | number:'1.0-0' }}
-                <sup>đ</sup></td>
+              <td>{{ ((quantity[i.bookId] != null ? quantity[i.bookId] : 1) * percent1(i.unitPrice, i.pricePercent)) |
+                number:'1.0-0' }}<sup>đ</sup></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="4" style="text-align: right;">Tổng tiền sản phẩm</td>
+              <td>{{ (totalmoney) | number:'1.0-0' }}<sup>đ</sup></td>
             </tr>
             <tr>
-              <td colspan="4" style="text-align: right;">Phí ship</td>
+              <td colspan="4" style="text-align: right;">Phí vận chuyển</td>
               <td>20.000<sup>đ</sup></td>
             </tr>
             <tr>
+              <td colspan="4" style="text-align: right;">Giảm giá</td>
+              <td>20.000<sup>đ</sup></td>
+            </tr>
+            <tr class="bold-large">
               <td colspan="4" style="text-align: right;">Tổng tiền</td>
               <td>{{ (totalmoney + 20000) | number:'1.0-0' }}<sup>đ</sup></td>
             </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Chọn phương thức thanh toán -->
-      <div class="highlighted-products-section">
-        <mat-card class="highlighted-title-card">
-          <mat-card-content style="font-size: 18px; color: #FFF; font-weight: bold;">PHƯƠNG THỨC THANH TOÁN
-          </mat-card-content>
-        </mat-card>
-        <mat-radio-group (change)="onPaymentMethodChange($event)" class="address-options">
-          <mat-radio-button [value]="'cash'">Thanh toán khi nhận hàng</mat-radio-button>
-          <mat-radio-button [value]="'paypal'">Paypal</mat-radio-button>
-        </mat-radio-group>
-      </div>
-
-      <!-- Nút thanh toán -->
-      <div class="payment-button-section">
-        <div *ngIf="selectedPaymentMethod === 'cash'" class="place-order-button">
-          <button (click)="Order()" color="primary" mat-raised-button>ĐẶT HÀNG</button>
-        </div>
-        <div *ngIf="selectedPaymentMethod === 'paypal'" class="paypal-button-container">
-          <div id="paypal-button"></div>
-        </div>
+          </tfoot>
+        </table>
       </div>
     </div>
+
+    <!-- Chọn phương thức thanh toán -->
+    <div class="highlighted-products-section">
+      <mat-card class="highlighted-title-card">
+        <mat-card-content style="font-size: 18px; color: #FFF; font-weight: bold;">PHƯƠNG THỨC THANH TOÁN
+        </mat-card-content>
+      </mat-card>
+      <mat-radio-group (change)="onPaymentMethodChange($event)" class="address-options">
+        <mat-radio-button [value]="'cash'">Thanh toán khi nhận hàng</mat-radio-button>
+        <mat-radio-button [value]="'paypal'">Paypal</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <!-- Nút thanh toán -->
+    <div class="payment-button-section">
+      <div *ngIf="selectedPaymentMethod === 'cash'" class="place-order-button">
+        <button (click)="Order()" color="primary" mat-raised-button>ĐẶT HÀNG</button>
+      </div>
+      <div *ngIf="selectedPaymentMethod === 'paypal'" class="paypal-button-container">
+        <div id="paypal-button"></div>
+      </div>
+    </div>
+
   </div>
   <app-footer></app-footer>
 </div>

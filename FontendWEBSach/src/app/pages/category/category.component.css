@@ -7,7 +7,7 @@
 
 .container {
   display: flex;
-  max-width: 1300px;
+  max-width: 1500px;
   margin: auto;
 }
 
@@ -184,6 +184,7 @@ body {
   display: flex;
   justify-content: center;
   width: 100%;
+  
 }
 
 .product-rating {
