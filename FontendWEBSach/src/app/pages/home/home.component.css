@@ -7,17 +7,8 @@ body {
   margin-right: 4%;
 }
 
-.btn-xt {
-  background-color: rgba(196, 209, 218, 1);
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  font-size: 15px;
-  z-index: 0;
-}
-
-.img-QC {
-  width: 100px;
+.container {
+  max-width: 1500px;
   margin: auto;
 }
 
@@ -30,45 +21,14 @@ body {
   margin: auto;
 }
 
-.img-QC {
-  width: 70%;
-  margin: auto;
-}
-
-
-.img-QC-2 {
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  gap: 10px; /* Điều chỉnh khoảng cách giữa hai hình ảnh */
-}
-
-
-.sachhay {
-  max-width: 44%; /* Giới hạn chiều rộng tối đa cho hình ảnh */
-  width: 100%; /* Đảm bảo hình ảnh chiếm toàn bộ chiều rộng có thể của nó */
-  height: auto; /* Đảm bảo chiều cao tự động điều chỉnh dựa trên chiều rộng */
-  /* display: block; */
-  object-fit: contain; /* Giữ nguyên tỷ lệ của hình ảnh */
-}
-
-.backtoschool {
-  max-width: 29%; /* Giới hạn chiều rộng tối đa cho hình ảnh */
-  width: 100%; /* Đảm bảo hình ảnh chiếm toàn bộ chiều rộng có thể của nó */
-  height: auto; /* Đảm bảo chiều cao tự động điều chỉnh dựa trên chiều rộng */
-  /* display: block; */
-  object-fit: contain; /* Giữ nguyên tỷ lệ của hình ảnh */
-}
-
-/* Logo Bộ Thông Báo Công Thương */
 .bo-tb-logo {
-  width: 200px; /* bạn có thể điều chỉnh kích thước này */
+  width: 200px;
   margin-bottom: 10px;
 }
 
 .social-icons, .download-icons {
   display: flex;
-  gap: 10px; /* khoảng cách giữa các icon */
+  gap: 10px; 
   margin-bottom: 10px;
 }
 
@@ -76,99 +36,12 @@ body {
   background: transparent;
   border: none;
   cursor: pointer;
-  padding: 5px; /* khoảng cách giữa viền và ảnh */
+  padding: 5px;
 }
 
 .icon-btn img {
-  width: 25px; /* kích thước của các icon */
+  width: 25px; 
   height: auto;
-}
-
-
-.highlighted-products-section {
-  width: 100%;
-  border: 1px solid #E9EAEE;
-  border-radius: 5px;
-  background-color: #E9EAEE;
-  margin: 0 40px 0 0px;
-  padding-bottom: 30px;
-  margin-bottom: 40px;
-  /* background-color: #97978D; */
-}
-
-.highlighted-products-section-aut {
-  width: 100%;
-  border: 1px solid #E9EAEE;
-  border-radius: 5px;
-  background-color: #E9EAEE;
-  margin: 0 40px 0 0px;
-  /* padding-bottom: 30px; */
-  margin-bottom: 40px;
-  /* background-color: #97978D; */
-}
-
-.highlighted-title-card {
-  margin-bottom: 10px;
-  background-color: #97978D;
-  border-radius: 5px;
-}
-
-.products-container {
-  display: flex;
-  margin-left: 2%;
-  margin-right: 2%;
-  justify-content: space-between;
-  background-color: #E9EAEE;
-}
-
-.product-card {
-  width: calc(25% - 15px);
-  transition: transform 0.3s;
-}
-
-.product-card:hover {
-  transform: scale(1.05);
-}
-
-.product-image {
-  width: 200px;
-  height: 300px;
-  object-fit: cover;
-  margin: auto;
-  margin-top: 10px;
-}
-
-.product-name {
-  font-size: 16px;
-  margin-top: 10px;
-}
-
-.product-price {
-  font-size: 14px;
-  margin-top: 5px;
-  color: #333;
-}
-
-
-.see-more-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-  background-color: #E9EAEE;
-}
-
-.btn-xt {
-  cursor: pointer;
-  background-color: #97978D;
-  color: white;
-  width: 150px;
-  margin: auto;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-}
-
-.btn-xt:hover {
-  background-color: #005885;
 }
 
 .Banner-container {
@@ -180,7 +53,7 @@ body {
 }
 
 #carouselExampleControls {
-  flex: 0 0 70%; /* Chiếm 70% chiều rộng */
+  flex: 0 0 70%;
   max-width: 70%;
   margin-right: 20px;
   z-index: 0;
@@ -188,13 +61,13 @@ body {
 
 .picsum-img-wrapper {
   width: 100%;
-  overflow: hidden; /* Ẩn phần của ảnh nếu nó vượt ra ngoài chiều cao cố định */
+  overflow: hidden; 
 }
 
 .picsum-img-wrapper img {
-  width: 100%; /* chiếm toàn bộ chiều rộng của container */
-  height: 100%; /* chiếm toàn bộ chiều cao của container */
-  object-fit: cover; /* cắt bớt ảnh để giữ tỷ lệ */
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover; 
 }
 
 
@@ -206,17 +79,6 @@ body {
 
 }
 
-
-/* .Banner > div { */
-/* flex: 1; Mỗi div chiếm một nửa chiều cao của .Banner */
-/* display: flex; */
-/* align-items: center; Căn giữa theo chiều dọc */
-/* justify-content: center; Căn giữa theo chiều ngang */
-/* } */
-
-/* .Banner > div:first-child {
-  margin-bottom: 15px;
-} */
 .banner-1 {
   height: 50%;
   margin-bottom: 12px;
@@ -237,16 +99,39 @@ body {
 .banner-2 img {
   height: 100%;
 }
+/* sp */
+
+.highlighted-products-section {
+  width: 100%;
+  border: 1px solid #E9EAEE;
+  border-radius: 5px;
+  background-color: #E9EAEE;
+  margin: 0 40px 0 0px;
+  padding-bottom: 30px;
+  margin-bottom: 40px;
+}
+
+.highlighted-title-card {
+  margin-bottom: 10px;
+  background-color: #97978D;
+  border-radius: 5px;
+}
+
+.products-container {
+  display: flex;
+  margin: 2%;
+  justify-content: flex-start;
+  background-color: #E9EAEE;
+}
 
 .cartegory-right-bottom-item {
   position: relative;
-  width: calc(24% - 20px);
+  width: calc(20% - 10px);
   text-align: center;
-  padding: 10px 0;
-  margin: 10px;
+  padding: 10px;
+  margin: 15px;
   background-color: #fff;
   border-radius: 5px;
-
 }
 
 .cartegory-right-bottom-item:hover {
@@ -263,7 +148,7 @@ body {
 }
 
 .cartegory-right-bottom-item h1 {
-  font-size: 15px;
+  font-size: 18px;
   color: #777;
   padding: 5px 12px;
   text-align: left;
@@ -324,5 +209,12 @@ body {
 }
 
 .product-rating {
-  margin-top: -5px;
+    margin-bottom: 20px;
+}
+
+.see-more-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  background-color: #E9EAEE;
 }

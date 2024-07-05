@@ -235,4 +235,32 @@ export class PaymentComponent implements OnInit {
   Order() {
     this.processOrder();
   }
+
+  selectedCoupon: string ='';
+  discountAmount: number = 0;
+  coupons = [
+    { code: 'COUPON1', description: 'Mã giảm giá 10%' },
+    { code: 'COUPON2', description: 'Mã giảm giá 20%' },
+    { code: 'COUPON3', description: 'Mã giảm giá 30%' },
+  ];
+
+  applyCoupon() {
+    switch (this.selectedCoupon) {
+      case 'COUPON1':
+        this.updateDiscount(0.1); 
+        break;
+      case 'COUPON2':
+        this.updateDiscount(0.2); 
+        break;
+      case 'COUPON3':
+        this.updateDiscount(0.3); 
+        break;
+      default:
+        this.updateDiscount(0);  
+        break;
+    }
+  }
+  updateDiscount(percent: number) {
+    this.discountAmount = this.totalmoney * percent;
+  }
 }
