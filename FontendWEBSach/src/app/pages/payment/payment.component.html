@@ -20,9 +20,9 @@
       </mat-card>
       <div class="check-voucher">
         <div class="coupon-section">
-          <mat-radio-group [(ngModel)]="selectedCoupon" class="coupon-radio-group" (change)="applyCoupon()">
-            <mat-radio-button *ngFor="let coupon of coupons" [value]="coupon.code">
-              {{ coupon.description }}
+          <mat-radio-group [(ngModel)]="selectedCoupon" class="coupon-radio-group">
+            <mat-radio-button *ngFor="let voucher of vouchers" [value]="voucher.code" (change)="updateDiscountAmount(voucher)">
+              {{ voucher.description }}
             </mat-radio-button>
           </mat-radio-group>
         </div>

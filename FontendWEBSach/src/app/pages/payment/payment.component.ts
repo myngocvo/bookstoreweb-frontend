@@ -1,7 +1,6 @@
 import {Component, ElementRef, OnInit, Renderer2} from '@angular/core';
 import {forkJoin} from 'rxjs';
 import {Router} from '@angular/router';
-
 import {SharedataService} from 'src/services/sharedata/sharedata.service';
 import {BooksService} from 'src/services/Books/books.service';
 import {BookDetailsViewModel} from 'src/interfaces/fullbook';
@@ -9,7 +8,7 @@ import {CustomermainService} from 'src/services/customermain/customermain.servic
 import {CustomerService} from 'src/services/customer/customer.service';
 import {OrdersService} from 'src/services/Orders/orders.service';
 import {Order} from 'src/interfaces/Orders';
-
+import { VoucherService } from 'src/services/Voucher/voucher.service';
 declare var paypal: any;
 
 @Component({
@@ -36,6 +35,7 @@ export class PaymentComponent implements OnInit {
   IscheckOrder: boolean = false;
   selectedPaymentMethod: string = 'cash';
   showPaypalButton: boolean = false;
+  vouchers: any[] = [];
 
   // Exchange rate (example rate)
   exchangeRate: number = 23000; // VND to USD
@@ -48,7 +48,8 @@ export class PaymentComponent implements OnInit {
     private customerMain: CustomermainService,
     private router: Router,
     private sharedata: SharedataService,
-    private bookfull: BooksService
+    private bookfull: BooksService,
+    private voucherService: VoucherService,
   ) {
     this.sharedata.checkedProductIds$.subscribe((value) => {
       this.checkedProductIds = value;
@@ -75,6 +76,7 @@ export class PaymentComponent implements OnInit {
 
   ngOnInit() {
     this.renderPaypalButton();
+    this.loadVouchers();
   }
 
   displayPaymentSection(display: boolean) {
@@ -83,7 +85,7 @@ export class PaymentComponent implements OnInit {
       this.ren.setStyle(payment, 'display', display ? 'block' : 'none');
     }
   }
-
+// //////
   calculateTotalMoney() {
     this.totalmoney = this.checkedProductIds.reduce((acc, id) => {
       return acc + (this.productsPrice[id] * (this.quantity[id] || 1));
@@ -220,31 +222,24 @@ export class PaymentComponent implements OnInit {
     this.processOrder();
   }
 
-  selectedCoupon: string ='';
+  loadVouchers() {
+    this.voucherService.Vouchers().subscribe(
+      (data: any[]) => {
+        this.vouchers = data;
+      },
+      (error: any) => {
+        console.error('Error loading vouchers:', error);
+      }
+    );
+  }
+  selectedCoupon: string | null = null;
   discountAmount: number = 0;
-  coupons = [
-    { code: 'COUPON1', description: 'Mã giảm giá 10%' },
-    { code: 'COUPON2', description: 'Mã giảm giá 20%' },
-    { code: 'COUPON3', description: 'Mã giảm giá 30%' },
-  ];
-
-  applyCoupon() {
-    switch (this.selectedCoupon) {
-      case 'COUPON1':
-        this.updateDiscount(0.1); 
-        break;
-      case 'COUPON2':
-        this.updateDiscount(0.2); 
-        break;
-      case 'COUPON3':
-        this.updateDiscount(0.3); 
-        break;
-      default:
-        this.updateDiscount(0);  
-        break;
+  updateDiscountAmount(selectedVoucher: any) {
+    if (selectedVoucher && selectedVoucher.percentDiscount) {
+      this.discountAmount = (this.totalmoney * selectedVoucher.percentDiscount) / 100;
+    } else {
+      this.discountAmount = 0;
     }
   }
-  updateDiscount(percent: number) {
-    this.discountAmount = this.totalmoney * percent;
-  }
+  
 }

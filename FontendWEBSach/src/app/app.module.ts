@@ -66,10 +66,8 @@ import {ThemSachComponent} from './componentAdmin/them-sach/them-sach.component'
 import {UserAdminComponent} from './componentAdmin/user-admin/user-admin.component';
 import {VoucherAdminComponent} from './componentAdmin/voucher-admin/voucher-admin.component';
 import {ModalApceptComponent} from './componentAdmin/modal-apcept/modal-apcept.component';
-import {
-  ModalAddStakholderbookComponent
-} from './componentAdmin/modal-add-stakholderbook/modal-add-stakholderbook.component';
-
+import {ModalAddStakholderbookComponent} from './componentAdmin/modal-add-stakholderbook/modal-add-stakholderbook.component';
+import { VoucherService } from 'src/services/Voucher/voucher.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -141,7 +139,7 @@ import {
     CloudinaryModule
   ],
 
-  providers: [],
+  providers: [VoucherService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

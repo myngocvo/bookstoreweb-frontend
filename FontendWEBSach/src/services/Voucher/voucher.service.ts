@@ -12,7 +12,7 @@ export class VoucherService {
   }
 
   Vouchers() {
-    return this.http.get<any>(`${this.baseUrl}Vouchers`)
+    return this.http.get<any[]>(`${this.baseUrl}Vouchers`);
   }
 
   PostVoucher(voucher: any) {
@@ -27,3 +27,4 @@ export class VoucherService {
     return this.http.delete<any>(`${this.baseUrl}Vouchers/${id}`)
   }
 }
+
