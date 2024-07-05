@@ -24,35 +24,37 @@ export class CartComponent {
   checkedProductIds: string[] = [];
   totalProduct: number = 0;
   totalmoney: number = 0;
-  constructor(private router: Router,private sharedata:SharedataService,private cdr: ChangeDetectorRef,private el: ElementRef,private cartService:CartsService,private customer: CustomerService,private bookservice:BooksService,
-  private renderer: Renderer2)
-  {
-    this.idcustomer=this.customer.getClaimValue();
+
+  constructor(private router: Router, private sharedata: SharedataService, private cdr: ChangeDetectorRef, private el: ElementRef, private cartService: CartsService, private customer: CustomerService, private bookservice: BooksService,
+              private renderer: Renderer2) {
+    this.idcustomer = this.customer.getClaimValue();
     this.refreshCartData()
   }
-checkCartdisplay(check: boolean, idBooks: string[]): void {
-  if (check) {
-    const bookObservables = idBooks.map(id => this.bookservice.getBookDetailsWithImagesid(id));
-    forkJoin(bookObservables).subscribe({
-      next: (results) => {
-        this.books = results;
-        results.forEach((book) => {
-          // Layays giá tiền của sách
-          if (!this.productsPrice.hasOwnProperty(book.bookId)) {
-            this.productsPrice[book.bookId] = (1-book.pricePercent)*book.unitPrice;
-          }
-        });
-      },
-      error: (er) => {
-        console.log('Lỗi lấy dữ liệu');
-      }
-    });
-    const Cart = this.el.nativeElement.querySelector('#cart');
-    this.renderer.setStyle(Cart, 'display', 'block');
-    const CartNone = this.el.nativeElement.querySelector('#cartnone');
-    this.renderer.setStyle(CartNone, 'display', 'none');
+
+  checkCartdisplay(check: boolean, idBooks: string[]): void {
+    if (check) {
+      const bookObservables = idBooks.map(id => this.bookservice.getBookDetailsWithImagesid(id));
+      forkJoin(bookObservables).subscribe({
+        next: (results) => {
+          this.books = results;
+          results.forEach((book) => {
+            // Layays giá tiền của sách
+            if (!this.productsPrice.hasOwnProperty(book.bookId)) {
+              this.productsPrice[book.bookId] = (1 - book.pricePercent) * book.unitPrice;
+            }
+          });
+        },
+        error: (er) => {
+          console.log('Lỗi lấy dữ liệu');
+        }
+      });
+      const Cart = this.el.nativeElement.querySelector('#cart');
+      this.renderer.setStyle(Cart, 'display', 'block');
+      const CartNone = this.el.nativeElement.querySelector('#cartnone');
+      this.renderer.setStyle(CartNone, 'display', 'none');
+    }
   }
-}
+
 //xóa cart
   deletecart(idbook: string) {
     this.idcustomer = this.customer.getClaimValue();

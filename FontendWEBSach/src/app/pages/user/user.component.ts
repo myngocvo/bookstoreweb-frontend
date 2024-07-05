@@ -230,15 +230,15 @@ export class UserComponent {
   }
 
 //----------------------------------------
-logout() {
-  const confirmed = window.confirm('Bạn có chắc chắn muốn đăng xuất không?');
+  logout() {
+    const confirmed = window.confirm('Bạn có chắc chắn muốn đăng xuất không?');
 
-  if (confirmed) {
-    localStorage.removeItem('access_token');
-    alert('Đăng xuất thành công');
-    this.router.navigate(['home']);
+    if (confirmed) {
+      localStorage.removeItem('access_token');
+      alert('Đăng xuất thành công');
+      this.router.navigate(['home']);
+    }
   }
-}
 
 
   selectImage(): void {

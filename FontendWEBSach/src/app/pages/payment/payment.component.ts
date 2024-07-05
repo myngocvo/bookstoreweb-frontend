@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, Renderer2} from '@angular/core';
+import {Component, ElementRef, NgZone, OnInit, Renderer2} from '@angular/core';
 import {forkJoin} from 'rxjs';
 import {Router} from '@angular/router';
 import {SharedataService} from 'src/services/sharedata/sharedata.service';
@@ -39,6 +39,13 @@ export class PaymentComponent implements OnInit {
 
   // Exchange rate (example rate)
   exchangeRate: number = 23000; // VND to USD
+  selectedCoupon: string = '';
+  discountAmount: number = 0;
+  coupons = [
+    {code: 'COUPON1', description: 'Mã giảm giá 10%'},
+    {code: 'COUPON2', description: 'Mã giảm giá 20%'},
+    {code: 'COUPON3', description: 'Mã giảm giá 30%'},
+  ];
 
   constructor(
     private ren: Renderer2,
@@ -50,6 +57,7 @@ export class PaymentComponent implements OnInit {
     private sharedata: SharedataService,
     private bookfull: BooksService,
     private voucherService: VoucherService,
+    private ngZone: NgZone // Inject NgZone
   ) {
     this.sharedata.checkedProductIds$.subscribe((value) => {
       this.checkedProductIds = value;
@@ -96,8 +104,11 @@ export class PaymentComponent implements OnInit {
     this.idcustomer = this.customer.getClaimValue();
     this.customerMain.CustomersId(this.idcustomer).subscribe({
       next: (res) => {
-        this.address = res.address;
-        console.log(this.address);
+        // Use NgZone.run to ensure this code runs inside Angular's zone
+        this.ngZone.run(() => {
+          this.address = res.address;
+          console.log(this.address);
+        });
       },
       error: (err) => {
         console.error('Lỗi khi lấy thông tin khách hàng', err);
@@ -109,7 +120,10 @@ export class PaymentComponent implements OnInit {
     const bookObservables = this.checkedProductIds.map(id => this.bookfull.getBookDetailsWithImagesid(id));
     forkJoin(bookObservables).subscribe({
       next: (results) => {
-        this.books = results;
+        // Use NgZone.run to ensure this code runs inside Angular's zone
+        this.ngZone.run(() => {
+          this.books = results;
+        });
       },
       error: (err) => {
         console.log('Lỗi khi lấy thông tin sách', err);
@@ -122,10 +136,13 @@ export class PaymentComponent implements OnInit {
   }
 
   stranUser() {
-    this.router.navigate(['user']);
+    // Use NgZone.run to ensure this code runs inside Angular's zone
+    this.ngZone.run(() => {
+      this.router.navigate(['user']);
+    });
   }
 
-// Paypal
+  // Paypal
   onPaymentMethodChange(event: any) {
     this.selectedPaymentMethod = event.value;
     this.showPaypalButton = this.selectedPaymentMethod === 'paypal';
@@ -140,7 +157,7 @@ export class PaymentComponent implements OnInit {
     if (document.getElementById('paypal-button')) {
       paypal.Buttons({
         createOrder: (data: any, actions: any) => {
-          const amountInUSD = (this.totalmoney + 20000) / this.exchangeRate;
+          const amountInUSD = ((this.totalmoney + 20000) - this.discountAmount) / this.exchangeRate;
           return actions.order.create({
             purchase_units: [{
               amount: {
@@ -150,21 +167,24 @@ export class PaymentComponent implements OnInit {
             }]
           });
         },
-        onApprove: (data: any, actions: any) => {
-          return actions.order.capture().then((details: any) => {
-            // console.log('Transaction completed by ' + details.payer.name.given_name);
-            alert('Giao dịch hoàn tất bởi ' + details.payer.name.given_name);
+        onApprove: async (data: any, actions: any) => {
+          const orderID = data.orderID;
+          try {
+            const details = await actions.order.capture();
+            console.log('Payment successful:', details);
+            alert("Giao dịch thành công")
             this.processOrder();
-          });
+          } catch (err) {
+            console.error('Error during capture:', err);
+            alert('Đã xảy ra lỗi trong quá trình xử lý thanh toán. Vui lòng thử lại sau.');
+          }
         },
         onError: (err: any) => {
-          // console.error('PayPal transaction error:', err);
           alert('Đã xảy ra lỗi trong quá trình thanh toán bằng PayPal. Vui lòng thử lại sau.');
         }
       }).render('#paypal-button');
     }
   }
-
 
   processOrder() {
     if (this.address) {
@@ -190,8 +210,11 @@ export class PaymentComponent implements OnInit {
               ordersProcessed++;
               if (ordersProcessed === totalOrders) {
                 alert('Vui lòng chờ xác nhận đơn hàng từ shop');
-                this.resetState();
-                this.router.navigate(['user']);
+                // Navigate inside NgZone.run to ensure it runs inside Angular's zone
+                this.ngZone.run(() => {
+                  this.resetState();
+                  this.router.navigate(['user']);
+                });
               }
             },
             error: (err) => {
@@ -218,28 +241,25 @@ export class PaymentComponent implements OnInit {
     this.displayPaymentSection(false);
   }
 
-  Order() {
-    this.processOrder();
+  applyCoupon() {
+    switch (this.selectedCoupon) {
+      case 'COUPON1':
+        this.updateDiscount(0.1);
+        break;
+      case 'COUPON2':
+        this.updateDiscount(0.2);
+        break;
+      case 'COUPON3':
+        this.updateDiscount(0.3);
+        break;
+      default:
+        this.updateDiscount(0);
+        break;
+    }
   }
 
-  loadVouchers() {
-    this.voucherService.Vouchers().subscribe(
-      (data: any[]) => {
-        this.vouchers = data;
-      },
-      (error: any) => {
-        console.error('Error loading vouchers:', error);
-      }
-    );
-  }
-  selectedCoupon: string | null = null;
-  discountAmount: number = 0;
-  updateDiscountAmount(selectedVoucher: any) {
-    if (selectedVoucher && selectedVoucher.percentDiscount) {
-      this.discountAmount = (this.totalmoney * selectedVoucher.percentDiscount) / 100;
-    } else {
-      this.discountAmount = 0;
-    }
+  updateDiscount(percent: number) {
+    this.discountAmount = this.totalmoney * percent;
   }
   
 }
