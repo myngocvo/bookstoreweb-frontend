@@ -1,13 +1,13 @@
-import {Component, ElementRef, NgZone, OnInit, Renderer2} from '@angular/core';
-import {forkJoin} from 'rxjs';
-import {Router} from '@angular/router';
-import {SharedataService} from 'src/services/sharedata/sharedata.service';
-import {BooksService} from 'src/services/Books/books.service';
-import {BookDetailsViewModel} from 'src/interfaces/fullbook';
-import {CustomermainService} from 'src/services/customermain/customermain.service';
-import {CustomerService} from 'src/services/customer/customer.service';
-import {OrdersService} from 'src/services/Orders/orders.service';
-import {Order} from 'src/interfaces/Orders';
+import { Component, ElementRef, NgZone, OnInit, Renderer2 } from '@angular/core';
+import { forkJoin } from 'rxjs';
+import { Router } from '@angular/router';
+import { SharedataService } from 'src/services/sharedata/sharedata.service';
+import { BooksService } from 'src/services/Books/books.service';
+import { BookDetailsViewModel } from 'src/interfaces/fullbook';
+import { CustomermainService } from 'src/services/customermain/customermain.service';
+import { CustomerService } from 'src/services/customer/customer.service';
+import { OrdersService } from 'src/services/Orders/orders.service';
+import { Order } from 'src/interfaces/Orders';
 import { VoucherService } from 'src/services/Voucher/voucher.service';
 declare var paypal: any;
 
@@ -37,20 +37,20 @@ export class PaymentComponent implements OnInit {
   showPaypalButton: boolean = false;
   vouchers: any[] = [];
 
-  // Exchange rate (example rate)
-  exchangeRate: number = 23000; // VND to USD
+  // Tỷ giá hối đoái (ví dụ)
+  exchangeRate: number = 23000; // VND sang USD
   selectedCoupon: string = '';
   discountAmount: number = 0;
   coupons = [
-    {code: 'COUPON1', description: 'Mã giảm giá 10%'},
-    {code: 'COUPON2', description: 'Mã giảm giá 20%'},
-    {code: 'COUPON3', description: 'Mã giảm giá 30%'},
+    { code: 'COUPON1', description: 'Mã giảm giá 10%' },
+    { code: 'COUPON2', description: 'Mã giảm giá 20%' },
+    { code: 'COUPON3', description: 'Mã giảm giá 30%' },
   ];
 
   constructor(
     private ren: Renderer2,
     private ele: ElementRef,
-    private OrderService: OrdersService,
+    private orderService: OrdersService,
     private customer: CustomerService,
     private customerMain: CustomermainService,
     private router: Router,
@@ -93,7 +93,7 @@ export class PaymentComponent implements OnInit {
       this.ren.setStyle(payment, 'display', display ? 'block' : 'none');
     }
   }
-// //////
+
   calculateTotalMoney() {
     this.totalmoney = this.checkedProductIds.reduce((acc, id) => {
       return acc + (this.productsPrice[id] * (this.quantity[id] || 1));
@@ -142,7 +142,6 @@ export class PaymentComponent implements OnInit {
     });
   }
 
-  // Paypal
   onPaymentMethodChange(event: any) {
     this.selectedPaymentMethod = event.value;
     this.showPaypalButton = this.selectedPaymentMethod === 'paypal';
@@ -172,7 +171,7 @@ export class PaymentComponent implements OnInit {
           try {
             const details = await actions.order.capture();
             console.log('Payment successful:', details);
-            alert("Giao dịch thành công")
+            alert("Giao dịch thành công");
             this.processOrder();
           } catch (err) {
             console.error('Error during capture:', err);
@@ -205,7 +204,7 @@ export class PaymentComponent implements OnInit {
             bookId: i,
           };
 
-          this.OrderService.postOrder(dataOrder).subscribe({
+          this.orderService.postOrder(dataOrder).subscribe({
             next: (res) => {
               ordersProcessed++;
               if (ordersProcessed === totalOrders) {
@@ -261,5 +260,14 @@ export class PaymentComponent implements OnInit {
   updateDiscount(percent: number) {
     this.discountAmount = this.totalmoney * percent;
   }
-  
+
+  loadVouchers() {
+    // Load vouchers here
+  }
+
+  // Phương thức mới cập nhật chiết khấu
+  updateDiscountAmount(voucher: any) {
+    // Xử lý chiết khấu dựa trên voucher
+    this.discountAmount = this.totalmoney * (voucher.discount || 0);
+  }
 }
