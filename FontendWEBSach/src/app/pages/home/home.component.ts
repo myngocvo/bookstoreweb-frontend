@@ -78,7 +78,7 @@ export class HomeComponent {
     return price * (1 - per);
   }
 
-  //-------------------------------thay đôi số page khi chuyển trang
+  //thay đôi số page khi chuyển trang
   onPageChange(newPage: number): void {
     this.page = newPage;
     this.getProductDetailsoutstanding(this.page, this.pageSize)

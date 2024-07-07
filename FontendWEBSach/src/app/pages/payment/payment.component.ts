@@ -41,12 +41,7 @@ export class PaymentComponent implements OnInit {
   exchangeRate: number = 23000; // VND sang USD
   selectedCoupon: string = '';
   discountAmount: number = 0;
-  coupons = [
-    { code: 'COUPON1', description: 'Mã giảm giá 10%' },
-    { code: 'COUPON2', description: 'Mã giảm giá 20%' },
-    { code: 'COUPON3', description: 'Mã giảm giá 30%' },
-  ];
-
+  
   constructor(
     private ren: Renderer2,
     private ele: ElementRef,
@@ -94,12 +89,6 @@ export class PaymentComponent implements OnInit {
     }
   }
 
-  calculateTotalMoney() {
-    this.totalmoney = this.checkedProductIds.reduce((acc, id) => {
-      return acc + (this.productsPrice[id] * (this.quantity[id] || 1));
-    }, 0);
-  }
-
   getCustomerID() {
     this.idcustomer = this.customer.getClaimValue();
     this.customerMain.CustomersId(this.idcustomer).subscribe({
@@ -120,7 +109,6 @@ export class PaymentComponent implements OnInit {
     const bookObservables = this.checkedProductIds.map(id => this.bookfull.getBookDetailsWithImagesid(id));
     forkJoin(bookObservables).subscribe({
       next: (results) => {
-        // Use NgZone.run to ensure this code runs inside Angular's zone
         this.ngZone.run(() => {
           this.books = results;
         });
@@ -209,7 +197,6 @@ export class PaymentComponent implements OnInit {
               ordersProcessed++;
               if (ordersProcessed === totalOrders) {
                 alert('Vui lòng chờ xác nhận đơn hàng từ shop');
-                // Navigate inside NgZone.run to ensure it runs inside Angular's zone
                 this.ngZone.run(() => {
                   this.resetState();
                   this.router.navigate(['user']);
@@ -240,34 +227,39 @@ export class PaymentComponent implements OnInit {
     this.displayPaymentSection(false);
   }
 
-  applyCoupon() {
-    switch (this.selectedCoupon) {
-      case 'COUPON1':
-        this.updateDiscount(0.1);
-        break;
-      case 'COUPON2':
-        this.updateDiscount(0.2);
-        break;
-      case 'COUPON3':
-        this.updateDiscount(0.3);
-        break;
-      default:
-        this.updateDiscount(0);
-        break;
-    }
+  calculateTotalMoney() {
+    this.totalmoney = this.checkedProductIds.reduce((acc, id) => {
+      return acc + (this.productsPrice[id] * (this.quantity[id] || 1));
+    }, 0);
   }
 
-  updateDiscount(percent: number) {
-    this.discountAmount = this.totalmoney * percent;
+  calculateTotalAmount() {
+    const shippingFee = 20000; 
+    const totalPrice = this.totalmoney + shippingFee - this.discountAmount;
+    return totalPrice;
   }
-
-  loadVouchers() {
-    // Load vouchers here
-  }
-
-  // Phương thức mới cập nhật chiết khấu
+  
   updateDiscountAmount(voucher: any) {
-    // Xử lý chiết khấu dựa trên voucher
-    this.discountAmount = this.totalmoney * (voucher.discount || 0);
+    let calculatedDiscount = this.totalmoney * (voucher.percentDiscount / 100);
+    this.discountAmount = Math.min(calculatedDiscount, voucher.maxDiscount);
+
+    // Cập nhật lại tổng tiền sau khi áp dụng mã giảm giá
+    this.calculateTotalMoney();
   }
+
+  checkValidVouchers(vouchers: any[]) {
+    const currentDate = new Date();
+    return vouchers.filter(voucher => {
+      const endDate = new Date(voucher.dateEnd);
+      return voucher.quantity > 0 && endDate > currentDate;
+    });
+  }
+  
+  loadVouchers() {
+    this.voucherService.Vouchers().subscribe((data) => { 
+      this.vouchers = this.checkValidVouchers(data);
+    });
+  }
+  
+
 }

@@ -18,7 +18,7 @@ export interface ShoppingCartItem {
   description: string;
   image0: string[];
   title: string[];
-  price: number[]; // Nếu giá có thể có, nếu không, bạn có thể sử dụng number[] | undefined
+  price: number[]; 
   quantity: number[];
   bookIds: string[];
 }
