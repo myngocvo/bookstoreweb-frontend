@@ -5,7 +5,31 @@
   width: 100%;
   height: 100%;
 }
+.sach {
+  display: flex;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
 
+.form-left {
+  flex: 1;
+  flex-direction: column;
+  background-color: #e9eaee;
+  min-height: 100vh;
+  margin-right: 2%;
+  padding: 20px;
+  position: sticky;
+  top: 0;
+  flex-shrink: 0;
+  overflow-y: auto;
+}
+
+.form-right {
+  flex: 5;
+  overflow-y: auto;
+  padding-right: 2%;
+}
 .login_admin {
   border: 1px solid black;
   width: 40%;

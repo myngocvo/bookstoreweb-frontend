@@ -38,7 +38,7 @@ export class PaymentComponent implements OnInit {
   vouchers: any[] = [];
 
   // Tỷ giá hối đoái (ví dụ)
-  exchangeRate: number = 23000; // VND sang USD
+  exchangeRate: number = 23000; 
   selectedCoupon: string = '';
   discountAmount: number = 0;
   
@@ -124,7 +124,6 @@ export class PaymentComponent implements OnInit {
   }
 
   stranUser() {
-    // Use NgZone.run to ensure this code runs inside Angular's zone
     this.ngZone.run(() => {
       this.router.navigate(['user']);
     });
@@ -144,25 +143,22 @@ export class PaymentComponent implements OnInit {
     if (document.getElementById('paypal-button')) {
       paypal.Buttons({
         createOrder: (data: any, actions: any) => {
-          const amountInUSD = ((this.totalmoney + 20000) - this.discountAmount) / this.exchangeRate;
+          const amountInUSD = (this.calculateTotalAmount()) / this.exchangeRate;
           return actions.order.create({
             purchase_units: [{
               amount: {
                 currency_code: 'USD',
-                value: amountInUSD.toFixed(2) // Ensure 2 decimal places
+                value: amountInUSD.toFixed(2) 
               }
             }]
           });
         },
-        onApprove: async (data: any, actions: any) => {
+        onApprove: async (data: any) => {
           const orderID = data.orderID;
           try {
-            const details = await actions.order.capture();
-            console.log('Payment successful:', details);
             alert("Giao dịch thành công");
             this.processOrder();
           } catch (err) {
-            console.error('Error during capture:', err);
             alert('Đã xảy ra lỗi trong quá trình xử lý thanh toán. Vui lòng thử lại sau.');
           }
         },
@@ -242,8 +238,6 @@ export class PaymentComponent implements OnInit {
   updateDiscountAmount(voucher: any) {
     let calculatedDiscount = this.totalmoney * (voucher.percentDiscount / 100);
     this.discountAmount = Math.min(calculatedDiscount, voucher.maxDiscount);
-
-    // Cập nhật lại tổng tiền sau khi áp dụng mã giảm giá
     this.calculateTotalMoney();
   }
 
@@ -260,6 +254,4 @@ export class PaymentComponent implements OnInit {
       this.vouchers = this.checkValidVouchers(data);
     });
   }
-  
-
 }

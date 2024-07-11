@@ -11,8 +11,8 @@ export class StaffAdminComponent {
   Users: User[] = [];
   filteredUsers: User[] = [];
   user: any = {};
-  selectAllChecked = false; // Biến để theo dõi trạng thái chọn tất cả
-  selectedStaff: any[] = []; // Mảng để lưu trữ trạng thái chọn của từng sách
+  selectAllChecked = false; 
+  selectedStaff: any[] = []; 
   assets: any;
   isDeleteModalVisible = false;
   isAddStaffModalVisible = false;
@@ -35,23 +35,22 @@ export class StaffAdminComponent {
 
   loadpro(searchTerm: string | null) {
     if (searchTerm && searchTerm.trim() !== '') {
-      // Filter the books based on the search term
       this.filteredUsers = this.Users.filter(user =>
         user.fullName.toLowerCase().includes(searchTerm.toLowerCase())
       );
     } else {
-      // If no search term or an empty search term, show all books
-      this.filteredUsers = this.Users.slice(0, 25); // Or simply assign this.filteredBooks = this.Books; for all books
+      this.filteredUsers = this.Users.slice(0, 25);
     }
     console.log(this.filteredUsers)
   }
 
   selectAll(event: any) {
-    this.selectAllChecked = event.target.checked; // Cập nhật trạng thái chọn tất cả
+    this.selectAllChecked = event.target.checked; 
 
     if (this.selectAllChecked) {
       this.selectedStaff = this.Users.slice(0, 25);
-    } else {
+    } 
+    else {
       this.selectedStaff = [];
     }
   }
@@ -65,7 +64,10 @@ export class StaffAdminComponent {
         this.selectedStaff.splice(index, 1);
       }
     }
+    this.selectAllChecked = this.selectedStaff.length === this.Users.slice(0, 25).length;
   }
+
+  
 
   // Hàm xóa sách
   deleteStaff(cmt: any) {
